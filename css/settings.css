@@ -1,0 +1,321 @@
+/* ================================
+   تنسيقات صفحة الإعدادات
+   ================================ */
+
+.settings-section {
+    margin-bottom: var(--spacing-8);
+}
+
+.settings-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: var(--spacing-6);
+}
+
+/* قائمة التنقل */
+.settings-nav {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-4);
+    height: fit-content;
+}
+
+.settings-nav .nav-item {
+    width: 100%;
+    padding: var(--spacing-3) var(--spacing-4);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+    margin-bottom: var(--spacing-2);
+}
+
+.settings-nav .nav-item:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.settings-nav .nav-item.active {
+    background: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary);
+}
+
+.settings-nav .nav-item i {
+    width: 20px;
+}
+
+/* محتوى الإعدادات */
+.settings-content {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-6);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-6);
+}
+
+/* الملف الشخصي */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-5);
+    margin-bottom: var(--spacing-6);
+    padding-bottom: var(--spacing-6);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.profile-avatar {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+}
+
+.change-avatar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--primary);
+    color: white;
+    border: 3px solid var(--bg-secondary);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.change-avatar:hover {
+    background: var(--primary-dark);
+}
+
+.profile-info h4 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-1);
+}
+
+.profile-info p {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+/* نموذج الإعدادات */
+.settings-form {
+    max-width: 600px;
+}
+
+.settings-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+}
+
+.settings-form .form-group {
+    margin-bottom: var(--spacing-4);
+}
+
+.settings-form label {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-2);
+}
+
+.settings-form input,
+.settings-form select {
+    width: 100%;
+    padding: var(--spacing-3) var(--spacing-4);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    background: var(--bg-secondary);
+    font-size: var(--font-size-base);
+    font-family: inherit;
+}
+
+.settings-form input:focus,
+.settings-form select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* خيارات السمة */
+.theme-options {
+    display: flex;
+    gap: var(--spacing-4);
+}
+
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    cursor: pointer;
+}
+
+.theme-option input {
+    width: auto;
+}
+
+/* Toggle Switch */
+.toggle-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-3) 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.toggle-group:last-of-type {
+    border-bottom: none;
+    margin-bottom: var(--spacing-4);
+}
+
+.toggle {
+    position: relative;
+    width: 48px;
+    height: 24px;
+}
+
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--border-color);
+    border-radius: var(--radius-full);
+    transition: background var(--transition-fast);
+}
+
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: var(--radius-full);
+    transition: transform var(--transition-fast);
+}
+
+.toggle input:checked + .toggle-slider {
+    background: var(--primary);
+}
+
+.toggle input:checked + .toggle-slider::before {
+    transform: translateX(24px);
+}
+
+/* إجراءات البيانات */
+.data-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.data-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-5);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+}
+
+.data-action h4 {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-1);
+}
+
+.data-action p {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.data-action.danger {
+    background: var(--danger-bg);
+}
+
+.data-action.danger h4 {
+    color: var(--danger);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: var(--danger-dark);
+}
+
+/* التصميم المتجاوب */
+@media (max-width: 768px) {
+    .settings-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .settings-nav {
+        display: flex;
+        overflow-x: auto;
+        padding: var(--spacing-2);
+    }
+    
+    .settings-nav .nav-item {
+        white-space: nowrap;
+        margin-bottom: 0;
+        margin-left: var(--spacing-2);
+    }
+    
+    .settings-form .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .data-action {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-3);
+    }
+    
+    .data-action button {
+        width: 100%;
+    }
+}

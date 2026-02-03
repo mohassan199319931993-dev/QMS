@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الرئيسية - نظام إدارة الجودة</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- الشريط الجانبي -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span class="logo-text">نظام الجودة</span>
+            </div>
+            <button id="menuToggle" class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        <span>الرئيسية</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="data.html" class="nav-link">
+                        <i class="fas fa-database"></i>
+                        <span>إدخال البيانات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="records.html" class="nav-link">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>السجلات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="analytics.html" class="nav-link">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>التحليلات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="library.html" class="nav-link">
+                        <i class="fas fa-book"></i>
+                        <span>المكتبة</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="ai-assistant.html" class="nav-link">
+                        <i class="fas fa-robot"></i>
+                        <span>المساعد الذكي</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="settings.html" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <button onclick="logout()" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>تسجيل الخروج</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- الهيدر -->
+        <header class="main-header">
+            <div class="header-right">
+                <h1 class="page-title">الصفحة الرئيسية</h1>
+                <div class="breadcrumb">
+                    <span>الرئيسية</span>
+                </div>
+            </div>
+            
+            <div class="header-left">
+                <!-- البحث -->
+                <div class="search-container">
+                    <input type="text" id="globalSearch" placeholder="بحث سريع... (Ctrl+K)">
+                    <i class="fas fa-search"></i>
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+                
+                <!-- الإشعارات -->
+                <div class="notifications-container">
+                    <button id="notificationBtn" class="icon-btn">
+                        <i class="fas fa-bell"></i>
+                        <span id="notificationCount" class="badge">3</span>
+                    </button>
+                    <div id="notificationPanel" class="notification-panel">
+                        <div class="notification-header">
+                            <h3>الإشعارات</h3>
+                            <button onclick="markAllAsRead()">تحديد الكل كمقروء</button>
+                        </div>
+                        <div id="notificationList" class="notification-list"></div>
+                    </div>
+                </div>
+                
+                <!-- الوضع الليلي -->
+                <button id="darkModeToggle" class="icon-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <!-- معلومات المستخدم -->
+                <div class="user-menu-container">
+                    <button class="user-menu-toggle" onclick="toggleUserMenu()">
+                        <img class="user-image" src="" alt="المستخدم">
+                        <div class="user-info">
+                            <span class="user-name"></span>
+                            <span class="user-role"></span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div id="userMenu" class="user-dropdown">
+                        <a href="settings.html#profile">
+                            <i class="fas fa-user"></i>
+                            الملف الشخصي
+                        </a>
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            الإعدادات
+                        </a>
+                        <hr>
+                        <a href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            تسجيل الخروج
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- محتوى الصفحة -->
+        <div class="page-content">
+            <!-- قسم الترحيب مع الإحصائيات -->
+            <section class="welcome-stats-section">
+                <div class="welcome-card">
+                    <div class="welcome-content">
+                        <div class="welcome-badge">
+                            <i class="fas fa-sparkles"></i>
+                            <span>مرحباً بعودتك</span>
+                        </div>
+                        <h2>نظام إدارة الجودة المتكامل</h2>
+                        <p>تابع أداء الجودة، وقم بإدارة السجلات، واحصل على تحليلات متقدمة - كل ذلك في مكان واحد</p>
+                    </div>
+                    <div class="welcome-stats">
+                        <div class="welcome-stat">
+                            <div class="stat-icon blue"><i class="fas fa-clipboard-check"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="totalRecords">0</span>
+                                <span class="stat-label">سجل جودة</span>
+                            </div>
+                        </div>
+                        <div class="welcome-stat">
+                            <div class="stat-icon green"><i class="fas fa-percentage"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="qualityRate">0%</span>
+                                <span class="stat-label">معدل الجودة</span>
+                            </div>
+                        </div>
+                        <div class="welcome-stat">
+                            <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="pendingReviews">0</span>
+                                <span class="stat-label">قيد المراجعة</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- البطاقات السريعة -->
+            <section class="quick-actions">
+                <h3 class="section-title">
+                    <i class="fas fa-bolt"></i>
+                    وصول سريع
+                </h3>
+                <div class="actions-grid">
+                    <a href="data.html" class="action-card blue">
+                        <div class="action-icon"><i class="fas fa-plus-circle"></i></div>
+                        <div class="action-content">
+                            <span class="action-title">إضافة سجل</span>
+                            <span class="action-desc">تسجيل بيانات جودة جديدة</span>
+                        </div>
+                        <i class="fas fa-arrow-left action-arrow"></i>
+                    </a>
+                    <a href="records.html" class="action-card green">
+                        <div class="action-icon"><i class="fas fa-list"></i></div>
+                        <div class="action-content">
+                            <span class="action-title">عرض السجلات</span>
+                            <span class="action-desc">استعراض جميع السجلات</span>
+                        </div>
+                        <i class="fas fa-arrow-left action-arrow"></i>
+                    </a>
+                    <a href="analytics.html" class="action-card purple">
+                        <div class="action-icon"><i class="fas fa-chart-bar"></i></div>
+                        <div class="action-content">
+                            <span class="action-title">التقارير</span>
+                            <span class="action-desc">تحليلات وإحصائيات</span>
+                        </div>
+                        <i class="fas fa-arrow-left action-arrow"></i>
+                    </a>
+                    <a href="library.html" class="action-card orange">
+                        <div class="action-icon"><i class="fas fa-book"></i></div>
+                        <div class="action-content">
+                            <span class="action-title">المكتبة</span>
+                            <span class="action-desc">المستندات والموارد</span>
+                        </div>
+                        <i class="fas fa-arrow-left action-arrow"></i>
+                    </a>
+                </div>
+            </section>
+
+            <!-- المخططات التفاعلية -->
+            <section class="charts-section">
+                <div class="charts-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-chart-line"></i>
+                        نظرة عامة على الأداء
+                    </h3>
+                    <div class="period-selector">
+                        <button class="period-btn active" data-period="week">أسبوع</button>
+                        <button class="period-btn" data-period="month">شهر</button>
+                        <button class="period-btn" data-period="quarter">ربع سنة</button>
+                        <button class="period-btn" data-period="year">سنة</button>
+                    </div>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card main-chart">
+                        <div class="chart-header">
+                            <h4>معدل الجودة عبر الوقت</h4>
+                            <div class="chart-legend">
+                                <span class="legend-item"><span class="legend-dot primary"></span>الجودة الفعلية</span>
+                                <span class="legend-item"><span class="legend-dot target"></span>الهدف</span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="mainQualityChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card side-chart">
+                        <div class="chart-header">
+                            <h4>توزيع حالات السجلات</h4>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="statusDoughnutChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card side-chart">
+                        <div class="chart-header">
+                            <h4>أداء الموديلات</h4>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="modelsBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- قسم منظم: مصطلحات + النشاطات -->
+            <section class="split-section">
+                <!-- مصطلحات الجودة -->
+                <div class="terms-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-book-open"></i>
+                            مصطلحات الجودة
+                        </h3>
+                        <div class="section-actions">
+                            <div class="search-box">
+                                <input type="text" id="termsSearch" placeholder="بحث...">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filter-chips">
+                        <button class="filter-chip active" data-filter="all">الكل</button>
+                        <button class="filter-chip" data-filter="iso">معايير ISO</button>
+                        <button class="filter-chip" data-filter="tools">أدوات</button>
+                        <button class="filter-chip" data-filter="concepts">مفاهيم</button>
+                    </div>
+                    <div id="termsGrid" class="terms-grid"></div>
+                </div>
+
+                <!-- آخر النشاطات -->
+                <div class="activity-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-history"></i>
+                            آخر النشاطات
+                        </h3>
+                        <a href="#" class="view-all">عرض الكل</a>
+                    </div>
+                    <div id="activityList" class="activity-list"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- التذييل -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 نظام إدارة الجودة - جميع الحقوق محفوظة</p>
+                <div class="footer-links">
+                    <a href="#">الدعم الفني</a>
+                    <a href="#">الشروط والأحكام</a>
+                    <a href="#">سياسة الخصوصية</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/login.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/functions.js"></script>
+</body>
+</html>

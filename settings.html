@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات - نظام إدارة الجودة</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><i class="fas fa-shield-alt"></i><span class="logo-text">نظام الجودة</span></div>
+            <button id="menuToggle" class="menu-toggle"><i class="fas fa-bars"></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="fas fa-chart-line"></i><span>لوحة التحكم</span></a></li>
+                <li class="nav-item"><a href="data.html" class="nav-link"><i class="fas fa-database"></i><span>إدخال البيانات</span></a></li>
+                <li class="nav-item"><a href="records.html" class="nav-link"><i class="fas fa-clipboard-list"></i><span>السجلات</span></a></li>
+                <li class="nav-item"><a href="analytics.html" class="nav-link"><i class="fas fa-chart-pie"></i><span>التحليلات</span></a></li>
+                <li class="nav-item"><a href="library.html" class="nav-link"><i class="fas fa-book"></i><span>المكتبة</span></a></li>
+                <li class="nav-item"><a href="ai-assistant.html" class="nav-link"><i class="fas fa-robot"></i><span>المساعد الذكي</span></a></li>
+                <li class="nav-item"><a href="settings.html" class="nav-link active"><i class="fas fa-cog"></i><span>الإعدادات</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <button onclick="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i><span>تسجيل الخروج</span></button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="main-header">
+            <div class="header-right">
+                <h1 class="page-title">الإعدادات</h1>
+                <div class="breadcrumb"><span>الرئيسية</span><span>الإعدادات</span></div>
+            </div>
+            <div class="header-left">
+                <div class="search-container">
+                    <input type="text" id="globalSearch" placeholder="بحث سريع... (Ctrl+K)">
+                    <i class="fas fa-search"></i>
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+                <div class="notifications-container">
+                    <button id="notificationBtn" class="icon-btn"><i class="fas fa-bell"></i><span id="notificationCount" class="badge">3</span></button>
+                    <div id="notificationPanel" class="notification-panel">
+                        <div class="notification-header"><h3>الإشعارات</h3><button onclick="markAllAsRead()">تحديد الكل كمقروء</button></div>
+                        <div id="notificationList" class="notification-list"></div>
+                    </div>
+                </div>
+                <button id="darkModeToggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+                <div class="user-menu-container">
+                    <button class="user-menu-toggle" onclick="toggleUserMenu()">
+                        <img class="user-image" src="" alt="المستخدم">
+                        <div class="user-info"><span class="user-name"></span><span class="user-role"></span></div>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div id="userMenu" class="user-dropdown">
+                        <a href="settings.html#profile"><i class="fas fa-user"></i> الملف الشخصي</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> الإعدادات</a>
+                        <hr><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <section class="settings-section">
+                <div class="settings-layout">
+                    <div class="settings-nav">
+                        <button class="nav-item active" data-tab="profile"><i class="fas fa-user"></i> الملف الشخصي</button>
+                        <button class="nav-item" data-tab="general"><i class="fas fa-cog"></i> عام</button>
+                        <button class="nav-item" data-tab="appearance"><i class="fas fa-palette"></i> المظهر</button>
+                        <button class="nav-item" data-tab="notifications"><i class="fas fa-bell"></i> الإشعارات</button>
+                        <button class="nav-item" data-tab="security"><i class="fas fa-shield-alt"></i> الأمان</button>
+                        <button class="nav-item" data-tab="data"><i class="fas fa-database"></i> البيانات</button>
+                    </div>
+
+                    <div class="settings-content">
+                        <!-- الملف الشخصي -->
+                        <div class="tab-content active" id="profile">
+                            <h3>الملف الشخصي</h3>
+                            <div class="profile-header">
+                                <div class="profile-avatar">
+                                    <img id="profileImage" src="" alt="الصورة الشخصية">
+                                    <button class="change-avatar" onclick="changeAvatar()"><i class="fas fa-camera"></i></button>
+                                </div>
+                                <div class="profile-info">
+                                    <h4 id="profileName"></h4>
+                                    <p id="profileRole"></p>
+                                </div>
+                            </div>
+                            <form class="settings-form">
+                                <div class="form-row">
+                                    <div class="form-group"><label>الاسم الكامل</label><input type="text" id="fullName" value=""></div>
+                                    <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="email" value=""></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label>رقم الهاتف</label><input type="tel" id="phone" value=""></div>
+                                    <div class="form-group"><label>القسم</label><input type="text" id="department" value="" readonly></div>
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick="saveProfile()"><i class="fas fa-save"></i> حفظ التغييرات</button>
+                            </form>
+                        </div>
+
+                        <!-- الإعدادات العامة -->
+                        <div class="tab-content" id="general">
+                            <h3>الإعدادات العامة</h3>
+                            <form class="settings-form">
+                                <div class="form-group"><label>اسم النظام</label><input type="text" id="systemName" value="نظام إدارة الجودة"></div>
+                                <div class="form-group"><label>اللغة</label><select id="language"><option value="ar">العربية</option><option value="en">English</option></select></div>
+                                <div class="form-group"><label>المنطقة الزمنية</label><select id="timezone"><option value="+03:00">الرياض (+03:00)</option><option value="+04:00">دبي (+04:00)</option></select></div>
+                                <div class="form-group"><label>تنسيق التاريخ</label><select id="dateFormat"><option value="dd/mm/yyyy">DD/MM/YYYY</option><option value="yyyy/mm/dd">YYYY/MM/DD</option></select></div>
+                                <button type="button" class="btn btn-primary" onclick="saveGeneralSettings()"><i class="fas fa-save"></i> حفظ التغييرات</button>
+                            </form>
+                        </div>
+
+                        <!-- المظهر -->
+                        <div class="tab-content" id="appearance">
+                            <h3>المظهر</h3>
+                            <form class="settings-form">
+                                <div class="form-group">
+                                    <label>السمة</label>
+                                    <div class="theme-options">
+                                        <label class="theme-option"><input type="radio" name="theme" value="light" checked><span>فاتح</span></label>
+                                        <label class="theme-option"><input type="radio" name="theme" value="dark"><span>داكن</span></label>
+                                        <label class="theme-option"><input type="radio" name="theme" value="auto"><span>تلقائي</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-group"><label>اللون الأساسي</label><input type="color" id="primaryColor" value="#6c63ff"></div>
+                                <button type="button" class="btn btn-primary" onclick="saveAppearanceSettings()"><i class="fas fa-save"></i> حفظ التغييرات</button>
+                            </form>
+                        </div>
+
+                        <!-- الإشعارات -->
+                        <div class="tab-content" id="notifications">
+                            <h3>الإشعارات</h3>
+                            <form class="settings-form">
+                                <div class="toggle-group"><label>إشعارات البريد الإلكتروني</label><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+                                <div class="toggle-group"><label>إشعارات سطح المكتب</label><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+                                <div class="toggle-group"><label>إشعارات الجوال</label><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+                                <div class="toggle-group"><label>تنبيهات انخفاض الجودة</label><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+                                <button type="button" class="btn btn-primary" onclick="saveNotificationSettings()"><i class="fas fa-save"></i> حفظ التغييرات</button>
+                            </form>
+                        </div>
+
+                        <!-- الأمان -->
+                        <div class="tab-content" id="security">
+                            <h3>الأمان</h3>
+                            <form class="settings-form">
+                                <div class="form-group"><label>كلمة المرور الحالية</label><input type="password" placeholder="••••••••"></div>
+                                <div class="form-group"><label>كلمة المرور الجديدة</label><input type="password" placeholder="••••••••"></div>
+                                <div class="form-group"><label>تأكيد كلمة المرور</label><input type="password" placeholder="••••••••"></div>
+                                <div class="toggle-group"><label>المصادقة الثنائية</label><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+                                <button type="button" class="btn btn-primary" onclick="changePassword()"><i class="fas fa-key"></i> تغيير كلمة المرور</button>
+                            </form>
+                        </div>
+
+                        <!-- البيانات -->
+                        <div class="tab-content" id="data">
+                            <h3>إدارة البيانات</h3>
+                            <div class="data-actions">
+                                <div class="data-action"><div><h4>تصدير البيانات</h4><p>تصدير جميع بياناتك بصيغة Excel</p></div><button class="btn btn-outline" onclick="exportAllData()"><i class="fas fa-download"></i> تصدير</button></div>
+                                <div class="data-action"><div><h4>نسخ احتياطي</h4><p>إنشاء نسخة احتياطية من البيانات</p></div><button class="btn btn-outline" onclick="createBackup()"><i class="fas fa-cloud-upload-alt"></i> نسخ احتياطي</button></div>
+                                <div class="data-action danger"><div><h4>حذف الحساب</h4><p>حذف حسابك وجميع بياناتك نهائياً</p></div><button class="btn btn-danger" onclick="deleteAccount()"><i class="fas fa-trash"></i> حذف</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 نظام إدارة الجودة - جميع الحقوق محفوظة</p>
+                <div class="footer-links"><a href="#">الدعم الفني</a><a href="#">الشروط والأحكام</a><a href="#">سياسة الخصوصية</a></div>
+            </div>
+        </footer>
+    </main>
+
+    <div id="toastContainer" class="toast-container"></div>
+    <script src="js/login.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/functions.js"></script>
+</body>
+</html>

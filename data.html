@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدخال البيانات - نظام إدارة الجودة</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/data.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- الشريط الجانبي -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span class="logo-text">نظام الجودة</span>
+            </div>
+            <button id="menuToggle" class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>الرئيسية</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link">
+                        <i class="fas fa-chart-line"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="data.html" class="nav-link active">
+                        <i class="fas fa-database"></i>
+                        <span>إدخال البيانات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="records.html" class="nav-link">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>السجلات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="analytics.html" class="nav-link">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>التحليلات</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="library.html" class="nav-link">
+                        <i class="fas fa-book"></i>
+                        <span>المكتبة</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="ai-assistant.html" class="nav-link">
+                        <i class="fas fa-robot"></i>
+                        <span>المساعد الذكي</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="settings.html" class="nav-link">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <button onclick="logout()" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>تسجيل الخروج</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <!-- الهيدر -->
+        <header class="main-header">
+            <div class="header-right">
+                <h1 class="page-title">إدخال البيانات</h1>
+                <div class="breadcrumb">
+                    <span>الرئيسية</span>
+                    <span>إدخال البيانات</span>
+                </div>
+            </div>
+            
+            <div class="header-left">
+                <div class="search-container">
+                    <input type="text" id="globalSearch" placeholder="بحث سريع... (Ctrl+K)">
+                    <i class="fas fa-search"></i>
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+                
+                <div class="notifications-container">
+                    <button id="notificationBtn" class="icon-btn">
+                        <i class="fas fa-bell"></i>
+                        <span id="notificationCount" class="badge">3</span>
+                    </button>
+                    <div id="notificationPanel" class="notification-panel">
+                        <div class="notification-header">
+                            <h3>الإشعارات</h3>
+                            <button onclick="markAllAsRead()">تحديد الكل كمقروء</button>
+                        </div>
+                        <div id="notificationList" class="notification-list"></div>
+                    </div>
+                </div>
+                
+                <button id="darkModeToggle" class="icon-btn">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <div class="user-menu-container">
+                    <button class="user-menu-toggle" onclick="toggleUserMenu()">
+                        <img class="user-image" src="" alt="المستخدم">
+                        <div class="user-info">
+                            <span class="user-name"></span>
+                            <span class="user-role"></span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div id="userMenu" class="user-dropdown">
+                        <a href="settings.html#profile">
+                            <i class="fas fa-user"></i>
+                            الملف الشخصي
+                        </a>
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            الإعدادات
+                        </a>
+                        <hr>
+                        <a href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            تسجيل الخروج
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- محتوى الصفحة -->
+        <div class="page-content">
+            <!-- نموذج إدخال البيانات -->
+            <section class="data-form-section">
+                <div class="form-card">
+                    <div class="form-header">
+                        <h3><i class="fas fa-plus-circle"></i> إضافة سجل جودة جديد</h3>
+                    </div>
+                    
+                    <form id="qualityForm" class="data-form">
+                        <!-- قسم التاريخ والوقت -->
+                        <div class="form-section">
+                            <h4><i class="fas fa-calendar-alt"></i> التاريخ والوقت</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="datetime">التاريخ والوقت <span class="required">*</span></label>
+                                    <div class="input-with-btn">
+                                        <input type="datetime-local" id="datetime" name="datetime" required>
+                                        <button type="button" class="now-button" onclick="setCurrentDateTime()">
+                                            <i class="fas fa-clock"></i> الآن
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="year">السنة</label>
+                                    <input type="text" id="year" name="year" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="quarter">الربع</label>
+                                    <input type="text" id="quarter" name="quarter" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="month">الشهر</label>
+                                    <input type="text" id="month" name="month" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="week">الأسبوع</label>
+                                    <input type="text" id="week" name="week" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="shift">الوردية</label>
+                                    <input type="text" id="shift" name="shift" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hour">الساعة</label>
+                                    <input type="text" id="hour" name="hour" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- قسم معلومات الموديل -->
+                        <div class="form-section">
+                            <h4><i class="fas fa-box"></i> معلومات الموديل</h4>
+                            <div class="form-row">
+                                <div class="form-group autocomplete-container">
+                                    <label for="model-code">كود الموديل <span class="required">*</span></label>
+                                    <input type="text" id="model-code" name="model-code" placeholder="أدخل كود الموديل" required>
+                                    <ul id="model-suggestions" class="suggestions-list"></ul>
+                                </div>
+                                <div class="form-group">
+                                    <label for="model-name">اسم الموديل</label>
+                                    <input type="text" id="model-name" name="model-name" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="model-number">رقم الموديل</label>
+                                    <input type="text" id="model-number" name="model-number" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="model-type">نوع الموديل</label>
+                                    <input type="text" id="model-type" name="model-type" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="m-day">يوم الإنتاج</label>
+                                    <input type="text" id="m-day" name="m-day" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pdn-s">PDN-S</label>
+                                    <input type="text" id="pdn-s" name="pdn-s" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dft-s">DFT-S</label>
+                                    <input type="text" id="dft-s" name="dft-s" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- قسم بيانات الجودة -->
+                        <div class="form-section">
+                            <h4><i class="fas fa-chart-bar"></i> بيانات الجودة</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="quantity">الكمية <span class="required">*</span></label>
+                                    <input type="number" id="quantity" name="quantity" placeholder="أدخل الكمية" min="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sample-size">حجم العينة</label>
+                                    <input type="number" id="sample-size" name="sample-size" placeholder="أدخل حجم العينة" min="1">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="defect-count">عدد العيوب</label>
+                                    <input type="number" id="defect-count" name="defect-count" placeholder="أدخل عدد العيوب" min="0" value="0">
+                                </div>
+                                <div class="form-group">
+                                    <label for="quality-rate">معدل الجودة (%)</label>
+                                    <input type="number" id="quality-rate" name="quality-rate" placeholder="سيتم حسابه تلقائياً" readonly>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="result">النتيجة</label>
+                                    <select id="result" name="result">
+                                        <option value="">اختر النتيجة</option>
+                                        <option value="pass">مقبول</option>
+                                        <option value="fail">مرفوض</option>
+                                        <option value="hold">محجوز</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="status">الحالة</label>
+                                    <select id="status" name="status">
+                                        <option value="pending">قيد المراجعة</option>
+                                        <option value="approved">مقبول</option>
+                                        <option value="rejected">مرفوض</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- قسم الملاحظات -->
+                        <div class="form-section">
+                            <h4><i class="fas fa-sticky-note"></i> ملاحظات</h4>
+                            <div class="form-group">
+                                <label for="notes">ملاحظات إضافية</label>
+                                <textarea id="notes" name="notes" rows="4" placeholder="أدخل أي ملاحظات إضافية..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- أزرار الإجراءات -->
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                                <i class="fas fa-undo"></i> إعادة تعيين
+                            </button>
+                            <button type="button" class="btn btn-outline" onclick="saveDraft()">
+                                <i class="fas fa-save"></i> حفظ كمسودة
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-check"></i> حفظ السجل
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- جدول الموديلات -->
+            <section class="models-section">
+                <div class="section-header">
+                    <h3><i class="fas fa-list"></i> قائمة الموديلات</h3>
+                    <div class="section-actions">
+                        <button class="btn btn-outline" onclick="exportModels()">
+                            <i class="fas fa-download"></i> تصدير
+                        </button>
+                        <button class="btn btn-primary" onclick="addNewModel()">
+                            <i class="fas fa-plus"></i> إضافة موديل
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>الكود</th>
+                                <th>الاسم</th>
+                                <th>الرقم</th>
+                                <th>النوع</th>
+                                <th>يوم الإنتاج</th>
+                                <th>PDN-S</th>
+                                <th>DFT-S</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="modelsTable">
+                            <!-- سيتم ملؤها بالJavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <!-- التذييل -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 نظام إدارة الجودة - جميع الحقوق محفوظة</p>
+                <div class="footer-links">
+                    <a href="#">الدعم الفني</a>
+                    <a href="#">الشروط والأحكام</a>
+                    <a href="#">سياسة الخصوصية</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/login.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/functions.js"></script>
+</body>
+</html>

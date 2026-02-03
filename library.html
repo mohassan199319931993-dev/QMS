@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المكتبة - نظام إدارة الجودة</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/library.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo"><i class="fas fa-shield-alt"></i><span class="logo-text">نظام الجودة</span></div>
+            <button id="menuToggle" class="menu-toggle"><i class="fas fa-bars"></i></button>
+        </div>
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-home"></i><span>الرئيسية</span></a></li>
+                <li class="nav-item"><a href="dashboard.html" class="nav-link"><i class="fas fa-chart-line"></i><span>لوحة التحكم</span></a></li>
+                <li class="nav-item"><a href="data.html" class="nav-link"><i class="fas fa-database"></i><span>إدخال البيانات</span></a></li>
+                <li class="nav-item"><a href="records.html" class="nav-link"><i class="fas fa-clipboard-list"></i><span>السجلات</span></a></li>
+                <li class="nav-item"><a href="analytics.html" class="nav-link"><i class="fas fa-chart-pie"></i><span>التحليلات</span></a></li>
+                <li class="nav-item"><a href="library.html" class="nav-link active"><i class="fas fa-book"></i><span>المكتبة</span></a></li>
+                <li class="nav-item"><a href="ai-assistant.html" class="nav-link"><i class="fas fa-robot"></i><span>المساعد الذكي</span></a></li>
+                <li class="nav-item"><a href="settings.html" class="nav-link"><i class="fas fa-cog"></i><span>الإعدادات</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <button onclick="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i><span>تسجيل الخروج</span></button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="main-header">
+            <div class="header-right">
+                <h1 class="page-title">المكتبة</h1>
+                <div class="breadcrumb"><span>الرئيسية</span><span>المكتبة</span></div>
+            </div>
+            <div class="header-left">
+                <div class="search-container">
+                    <input type="text" id="globalSearch" placeholder="بحث سريع... (Ctrl+K)">
+                    <i class="fas fa-search"></i>
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+                <div class="notifications-container">
+                    <button id="notificationBtn" class="icon-btn"><i class="fas fa-bell"></i><span id="notificationCount" class="badge">3</span></button>
+                    <div id="notificationPanel" class="notification-panel">
+                        <div class="notification-header"><h3>الإشعارات</h3><button onclick="markAllAsRead()">تحديد الكل كمقروء</button></div>
+                        <div id="notificationList" class="notification-list"></div>
+                    </div>
+                </div>
+                <button id="darkModeToggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+                <div class="user-menu-container">
+                    <button class="user-menu-toggle" onclick="toggleUserMenu()">
+                        <img class="user-image" src="" alt="المستخدم">
+                        <div class="user-info"><span class="user-name"></span><span class="user-role"></span></div>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div id="userMenu" class="user-dropdown">
+                        <a href="settings.html#profile"><i class="fas fa-user"></i> الملف الشخصي</a>
+                        <a href="settings.html"><i class="fas fa-cog"></i> الإعدادات</a>
+                        <hr><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <section class="library-section">
+                <div class="library-header">
+                    <div class="library-search">
+                        <input type="text" id="librarySearch" placeholder="بحث في المستندات...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="library-filters">
+                        <select id="categoryFilter">
+                            <option value="">جميع الفئات</option>
+                            <option value="iso">معايير ISO</option>
+                            <option value="procedures">إجراءات العمل</option>
+                            <option value="training">مواد تدريبية</option>
+                            <option value="reports">تقارير</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="uploadDocument()"><i class="fas fa-upload"></i> رفع مستند</button>
+                    </div>
+                </div>
+
+                <div class="documents-grid" id="documentsGrid">
+                    <!-- سيتم ملؤها بالJavaScript -->
+                </div>
+            </section>
+        </div>
+
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>&copy; 2024 نظام إدارة الجودة - جميع الحقوق محفوظة</p>
+                <div class="footer-links"><a href="#">الدعم الفني</a><a href="#">الشروط والأحكام</a><a href="#">سياسة الخصوصية</a></div>
+            </div>
+        </footer>
+    </main>
+
+    <div id="toastContainer" class="toast-container"></div>
+    <script src="js/login.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/library.js"></script>
+    <script src="js/functions.js"></script>
+</body>
+</html>

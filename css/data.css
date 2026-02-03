@@ -1,0 +1,387 @@
+/* ================================
+   تنسيقات صفحة إدخال البيانات
+   ================================ */
+
+/* ================================
+   النموذج
+   ================================ */
+.data-form-section {
+    margin-bottom: var(--spacing-8);
+}
+
+.form-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.form-header {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-5) var(--spacing-6);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.form-header h3 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.form-header h3 i {
+    color: var(--primary);
+}
+
+.data-form {
+    padding: var(--spacing-6);
+}
+
+/* أقسام النموذج */
+.form-section {
+    margin-bottom: var(--spacing-8);
+}
+
+.form-section:last-of-type {
+    margin-bottom: 0;
+}
+
+.form-section h4 {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-5);
+    padding-bottom: var(--spacing-3);
+    border-bottom: 2px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.form-section h4 i {
+    color: var(--primary);
+}
+
+/* صف النموذج */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-5);
+    margin-bottom: var(--spacing-5);
+}
+
+.form-row:last-child {
+    margin-bottom: 0;
+}
+
+/* مجموعة الحقول */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.form-group label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+}
+
+.form-group label .required {
+    color: var(--danger);
+    margin-right: var(--spacing-1);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: var(--spacing-3) var(--spacing-4);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    background: var(--bg-secondary);
+    font-size: var(--font-size-base);
+    font-family: inherit;
+    transition: all var(--transition-fast);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+}
+
+.form-group input[readonly],
+.form-group select[readonly] {
+    background: var(--bg-tertiary);
+    cursor: not-allowed;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* حقل مع زر */
+.input-with-btn {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+.input-with-btn input {
+    flex: 1;
+}
+
+.now-button {
+    padding: var(--spacing-2) var(--spacing-4);
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: var(--font-size-sm);
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    transition: background var(--transition-fast);
+    white-space: nowrap;
+}
+
+.now-button:hover {
+    background: var(--primary-dark);
+}
+
+/* البحث التلقائي */
+.autocomplete-container {
+    position: relative;
+}
+
+.suggestions-list {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: var(--z-dropdown);
+    display: none;
+    margin-top: var(--spacing-1);
+}
+
+.suggestions-list li {
+    padding: var(--spacing-3) var(--spacing-4);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.suggestions-list li:hover {
+    background: var(--bg-tertiary);
+}
+
+/* أزرار الإجراءات */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-3);
+    padding-top: var(--spacing-6);
+    border-top: 1px solid var(--border-color);
+    margin-top: var(--spacing-6);
+}
+
+.btn {
+    padding: var(--spacing-3) var(--spacing-5);
+    border-radius: var(--radius);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    transition: all var(--transition-fast);
+    border: none;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background: var(--border-color);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.btn-outline:hover {
+    background: rgba(var(--primary-rgb), 0.1);
+}
+
+/* ================================
+   قسم الموديلات
+   ================================ */
+.models-section {
+    margin-bottom: var(--spacing-8);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-5);
+}
+
+.section-header h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.section-header h3 i {
+    color: var(--primary);
+}
+
+.section-actions {
+    display: flex;
+    gap: var(--spacing-3);
+}
+
+/* ================================
+   الجدول
+   ================================ */
+.table-container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.data-table th,
+.data-table td {
+    padding: var(--spacing-4) var(--spacing-5);
+    text-align: right;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.data-table th {
+    background: var(--bg-tertiary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.data-table tbody tr {
+    transition: background var(--transition-fast);
+}
+
+.data-table tbody tr:hover {
+    background: var(--bg-tertiary);
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* أزرار الإجراءات في الجدول */
+.action-btns {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.action-btn:hover {
+    background: var(--bg-tertiary);
+}
+
+.action-btn.view:hover {
+    color: var(--info);
+}
+
+.action-btn.edit:hover {
+    color: var(--warning);
+}
+
+.action-btn.delete:hover {
+    color: var(--danger);
+}
+
+/* ================================
+   التصميم المتجاوب
+   ================================ */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-3);
+    }
+    
+    .section-actions {
+        width: 100%;
+    }
+    
+    .section-actions .btn {
+        flex: 1;
+        justify-content: center;
+    }
+}

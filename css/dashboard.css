@@ -1,0 +1,592 @@
+/* ================================
+   تنسيقات لوحة التحكم - Dashboard
+   ================================ */
+
+/* ================================
+   بطاقات الإحصائيات
+   ================================ */
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-5);
+    margin-bottom: var(--spacing-8);
+}
+
+.stat-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-5);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--primary-gradient);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+.stat-card:hover::before {
+    opacity: 1;
+}
+
+.stat-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+    transition: all var(--transition-base);
+}
+
+.stat-card:hover .stat-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.stat-icon-wrapper.blue {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%);
+    color: var(--info);
+}
+
+.stat-icon-wrapper.green {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+    color: var(--success);
+}
+
+.stat-icon-wrapper.orange {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0.05) 100%);
+    color: var(--warning);
+}
+
+.stat-icon-wrapper.purple {
+    background: linear-gradient(135deg, rgba(108, 99, 255, 0.15) 0%, rgba(108, 99, 255, 0.05) 100%);
+    color: var(--primary);
+}
+
+.stat-icon-wrapper.red {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.05) 100%);
+    color: var(--danger);
+}
+
+.stat-info {
+    flex: 1;
+}
+
+.stat-value {
+    display: block;
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-1);
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+}
+
+.stat-trend {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: var(--radius-full);
+}
+
+.stat-trend.up {
+    color: var(--success);
+    background: var(--success-bg);
+}
+
+.stat-trend.down {
+    color: var(--danger);
+    background: var(--danger-bg);
+}
+
+.stat-trend i {
+    font-size: 12px;
+}
+
+/* ================================
+   قسم المخططات الرئيسية
+   ================================ */
+.main-charts {
+    margin-bottom: var(--spacing-8);
+}
+
+.chart-row {
+    display: grid;
+    gap: var(--spacing-6);
+}
+
+.chart-row.two-cols {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.chart-row.three-cols {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.chart-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-6);
+    transition: all var(--transition-base);
+}
+
+.chart-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-dark);
+}
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-5);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.chart-header h4 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.chart-header h4::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--primary-gradient);
+    border-radius: var(--radius-full);
+}
+
+.chart-actions {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+.chart-action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    transition: all var(--transition-fast);
+}
+
+.chart-action-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.05);
+}
+
+.chart-container {
+    height: 320px;
+    position: relative;
+}
+
+.chart-row.three-cols .chart-container {
+    height: 260px;
+}
+
+/* ================================
+   المخططات الإضافية
+   ================================ */
+.extra-charts {
+    margin-bottom: var(--spacing-8);
+}
+
+/* ================================
+   قسم آخر السجلات
+   ================================ */
+.recent-records {
+    margin-bottom: var(--spacing-8);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-5);
+}
+
+.section-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.section-title i {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-gradient);
+    color: white;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-lg);
+}
+
+.view-all {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    color: var(--primary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.view-all:hover {
+    background: rgba(var(--primary-rgb), 0.1);
+    color: var(--primary-dark);
+}
+
+.view-all i {
+    transition: transform var(--transition-fast);
+}
+
+.view-all:hover i {
+    transform: translateX(-4px);
+}
+
+/* ================================
+   الجدول
+   ================================ */
+.table-container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.data-table th,
+.data-table td {
+    padding: var(--spacing-4) var(--spacing-5);
+    text-align: right;
+}
+
+.data-table th {
+    background: var(--bg-tertiary);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.data-table th:first-child {
+    border-top-right-radius: var(--radius-xl);
+}
+
+.data-table th:last-child {
+    border-top-left-radius: var(--radius-xl);
+}
+
+.data-table tbody tr {
+    transition: all var(--transition-fast);
+}
+
+.data-table tbody tr:hover {
+    background: var(--bg-tertiary);
+}
+
+.data-table tbody tr:not(:last-child) td {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.data-table tbody td {
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+}
+
+/* شارات الحالة */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-1) var(--spacing-3);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+}
+
+.status-badge::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+}
+
+.status-badge.approved {
+    background: var(--success-bg);
+    color: var(--success-dark);
+}
+
+.status-badge.approved::before {
+    background: var(--success);
+    box-shadow: 0 0 8px var(--success);
+}
+
+.status-badge.pending {
+    background: var(--warning-bg);
+    color: var(--warning-dark);
+}
+
+.status-badge.pending::before {
+    background: var(--warning);
+    box-shadow: 0 0 8px var(--warning);
+    animation: pulse 2s infinite;
+}
+
+.status-badge.rejected {
+    background: var(--danger-bg);
+    color: var(--danger-dark);
+}
+
+.status-badge.rejected::before {
+    background: var(--danger);
+    box-shadow: 0 0 8px var(--danger);
+}
+
+/* أزرار الإجراءات */
+.action-btns {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    background: var(--bg-tertiary);
+    transition: all var(--transition-fast);
+    border: 1px solid transparent;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.action-btn.view:hover {
+    background: var(--info-bg);
+    color: var(--info);
+    border-color: var(--info);
+}
+
+.action-btn.edit:hover {
+    background: var(--warning-bg);
+    color: var(--warning);
+    border-color: var(--warning);
+}
+
+.action-btn.delete:hover {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border-color: var(--danger);
+}
+
+/* ================================
+   التذييل
+   ================================ */
+.main-footer {
+    margin-top: var(--spacing-8);
+    padding: var(--spacing-6) 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+}
+
+.footer-content p {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.footer-links {
+    display: flex;
+    gap: var(--spacing-6);
+}
+
+.footer-links a {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+/* ================================
+   التصميم المتجاوب
+   ================================ */
+@media (max-width: 1200px) {
+    .stats-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .chart-row.two-cols,
+    .chart-row.three-cols {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-container {
+        height: 280px;
+    }
+    
+    .chart-row.three-cols .chart-container {
+        height: 240px;
+    }
+    
+    .data-table {
+        font-size: var(--font-size-sm);
+    }
+    
+    .data-table th,
+    .data-table td {
+        padding: var(--spacing-3);
+    }
+    
+    .data-table th:nth-child(3),
+    .data-table td:nth-child(3),
+    .data-table th:nth-child(4),
+    .data-table td:nth-child(4) {
+        display: none;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-links {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .stat-card {
+        flex-direction: column;
+        text-align: center;
+        padding: var(--spacing-4);
+    }
+    
+    .stat-trend {
+        margin-top: var(--spacing-2);
+    }
+    
+    .chart-header {
+        flex-direction: column;
+        gap: var(--spacing-3);
+        align-items: flex-start;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: var(--spacing-3);
+        align-items: flex-start;
+    }
+}
+
+/* ================================
+   تأثيرات الحركة
+   ================================ */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.stat-card {
+    animation: slideUp 0.5s ease backwards;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+.chart-card {
+    animation: slideUp 0.6s ease backwards;
+}
+
+.chart-row.two-cols .chart-card:nth-child(1) { animation-delay: 0.2s; }
+.chart-row.two-cols .chart-card:nth-child(2) { animation-delay: 0.3s; }
+
+.chart-row.three-cols .chart-card:nth-child(1) { animation-delay: 0.3s; }
+.chart-row.three-cols .chart-card:nth-child(2) { animation-delay: 0.4s; }
+.chart-row.three-cols .chart-card:nth-child(3) { animation-delay: 0.5s; }
+
+.table-container {
+    animation: slideUp 0.7s ease backwards;
+    animation-delay: 0.4s;
+}
