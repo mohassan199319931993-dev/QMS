@@ -3,7 +3,7 @@
 // ===========================================
 
 // 🔗 رابط Google Apps Script Web App
-const API_URL = "https://script.google.com/macros/s/AKfycbw4MGVpgCg_Ee3eemazNWhaeW75X3fMmoLctYopQv6HdzR6sv46IDCGZ7l5nJ8YQ1OL/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxwoqL4CAhtcyOii8xk4Exy5WKxUphmoN_u9ngl56ecyeqAFmCdtvrPbtk_Z00RGOU/exec";
 
 // متغير منع التهيئة المكررة
 let loginInitialized = false;
@@ -57,15 +57,16 @@ async function handleLogin() {
     hideError();
 
     try {
-        const response = await fetch(API_URL);
-        const users = await response.json();
+        const response = await fetch(API_URL, {
+            method: "POST",
+            body: JSON.stringify({ username, password }),
+            headers: { "Content-Type": "application/json" }
+        });
 
-        const user = users.find(
-            u => u.username === username && u.password === password
-        );
+        const data = await response.json();
 
-        if (user) {
-            handleSuccessfulLogin(user, rememberMe);
+        if (data.success) {
+            handleSuccessfulLogin(data, rememberMe);
         } else {
             handleFailedLogin();
         }
@@ -78,6 +79,7 @@ async function handleLogin() {
     loginBtn.classList.remove("loading");
     loginBtn.disabled = false;
 }
+
 
 // ===========================================
 // 🎉 Login Success
