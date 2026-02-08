@@ -212,30 +212,63 @@ function setupEventListeners() {
 }
 
 // ========================
-// 📤 معالجة إرسال النموذج
+// 📤 معالجة إرسال النموذج مع Supabase
 // ========================
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
-    // التحقق من البيانات المطلوبة
+    // التحقق من الحقول المطلوبة
     if (!data.datetime || !data['model-code'] || !data.quantity) {
         showToast('الرجاء ملء جميع الحقول المطلوبة', 'error');
         return;
     }
 
-    // محاكاة حفظ البيانات
-    const recordId = 'QC-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 100000)).padStart(5, '0');
-    
-    showToast(`تم حفظ السجل بنجاح: ${recordId}`, 'success');
-    
-    // إعادة تعيين النموذج
-    setTimeout(() => {
+    // تجهيز السجل للإرسال
+    const record = {
+        datetime: data.datetime,
+        year: data.year,
+        quarter: data.quarter,
+        month: data.month,
+        week: data.week,
+        shift: data.shift,
+        hour: data.hour,
+
+        model_code: data['model-code'],
+        model_name: document.getElementById('model-name').value,
+        model_number: document.getElementById('model-number').value,
+        model_type: document.getElementById('model-type').value,
+        m_day: document.getElementById('m-day').value,
+        pdn_s: document.getElementById('pdn-s').value,
+        dft_s: document.getElementById('dft-s').value,
+        target: document.getElementById('target') ? Number(document.getElementById('target').value) : null,
+
+        quantity: Number(data.quantity),
+        defect_count: Number(data['defect-count'] || 0),
+        quality_rate: Number(data['quality-rate'] || 0),
+
+        result: data.result || null,
+        status: data.status || null,
+        notes: data.notes || null
+    };
+
+    try {
+        const { error } = await supabaseClient
+            .from('records')
+            .insert([record]);
+
+        if (error) throw error;
+
+        showToast('تم حفظ السجل بنجاح ✅', 'success');
         resetForm();
-    }, 1500);
+    } catch (err) {
+        console.error(err);
+        showToast('حصل خطأ أثناء الحفظ ❌', 'error');
+    }
 }
+
 
 // ========================
 // 🕐 تعيين التاريخ الحالي
