@@ -1,11 +1,9 @@
-// نطلع createClient من المكتبة
-const { createClient } = supabaseJs;
-
-// ننشئ العميل
-const supabaseClient = createClient(
+// Supabase CDN بيطلع object اسمه supabase
+const supabaseClient = supabase.createClient(
   "https://PROJECT_ID.supabase.co",
   "ANON_PUBLIC_KEY"
 );
 
-// نخليه Global عشان نستخدمه في أي ملف
+// نخليه global
 window.supabaseClient = supabaseClient;
+
