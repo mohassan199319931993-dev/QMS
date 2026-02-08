@@ -1,9 +1,6 @@
-// Supabase CDN بيطلع object اسمه supabase
 const supabaseClient = supabase.createClient(
-  "https://PROJECT_ID.supabase.co",
-  "ANON_PUBLIC_KEY"
+  "https://srdxflelevtzvjbzfojx.supabase.co",
+  "sb_publishable_kHNNLZGLmZls91T2CkHKew_gAqJrpA5"
 );
 
-// نخليه global
 window.supabaseClient = supabaseClient;
-
