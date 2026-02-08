@@ -3,342 +3,948 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الرئيسية - نظام إدارة الجودة</title>
-    <link rel="stylesheet" href="css/variables.css">
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/home.css">
+    <title>نظام إدارة الجودة | QMS</title>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts - Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- الشريط الجانبي -->
-    <aside id="sidebar" class="sidebar">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="logo">
                 <i class="fas fa-shield-alt"></i>
-                <span class="logo-text">نظام الجودة</span>
+                <span data-i18n="appName">نظام إدارة الجودة</span>
             </div>
-            <button id="menuToggle" class="menu-toggle">
+            <button class="sidebar-toggle" id="sidebarToggle">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
         
         <nav class="sidebar-nav">
-            <ul class="nav-list">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link active">
-                        <i class="fas fa-home"></i>
-                        <span>الرئيسية</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="dashboard.html" class="nav-link">
+            <ul>
+                <li class="active">
+                    <a href="#dashboard" data-section="dashboard">
                         <i class="fas fa-chart-line"></i>
-                        <span>لوحة التحكم</span>
+                        <span data-i18n="dashboard">لوحة التحكم</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="data.html" class="nav-link">
-                        <i class="fas fa-database"></i>
-                        <span>إدخال البيانات</span>
+                <li>
+                    <a href="#defect-registration" data-section="defect-registration">
+                        <i class="fas fa-plus-circle"></i>
+                        <span data-i18n="defectRegistration">تسجيل العيوب</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="records.html" class="nav-link">
-                        <i class="fas fa-clipboard-list"></i>
-                        <span>السجلات</span>
+                <li>
+                    <a href="#defect-tracking" data-section="defect-tracking">
+                        <i class="fas fa-tasks"></i>
+                        <span data-i18n="defectTracking">متابعة العيوب</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="analytics.html" class="nav-link">
+                <li>
+                    <a href="#analysis" data-section="analysis">
                         <i class="fas fa-chart-pie"></i>
-                        <span>التحليلات</span>
+                        <span data-i18n="analysis">تحليل الجودة</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="library.html" class="nav-link">
+                <li>
+                    <a href="#prediction" data-section="prediction">
+                        <i class="fas fa-brain"></i>
+                        <span data-i18n="prediction">التنبؤ والتوقع</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#library" data-section="library">
                         <i class="fas fa-book"></i>
-                        <span>المكتبة</span>
+                        <span data-i18n="library">مكتبة الجودة</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="ai-assistant.html" class="nav-link">
-                        <i class="fas fa-robot"></i>
-                        <span>المساعد الذكي</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="settings.html" class="nav-link">
+                <li>
+                    <a href="#settings" data-section="settings">
                         <i class="fas fa-cog"></i>
-                        <span>الإعدادات</span>
+                        <span data-i18n="settings">الإعدادات</span>
                     </a>
                 </li>
             </ul>
         </nav>
         
         <div class="sidebar-footer">
-            <button onclick="logout()" class="logout-btn">
-                <i class="fas fa-sign-out-alt"></i>
-                <span>تسجيل الخروج</span>
-            </button>
+            <div class="version">v1.0.0</div>
         </div>
     </aside>
 
-    <!-- المحتوى الرئيسي -->
+    <!-- Main Content -->
     <main class="main-content">
-        <!-- الهيدر -->
-        <header class="main-header">
-            <div class="header-right">
-                <h1 class="page-title">الصفحة الرئيسية</h1>
-                <div class="breadcrumb">
-                    <span>الرئيسية</span>
+        <!-- Top Bar -->
+        <header class="top-bar">
+            <div class="top-bar-left">
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="بحث..." data-i18n-placeholder="search">
                 </div>
             </div>
-            
-            <div class="header-left">
-                <!-- البحث -->
-                <div class="search-container">
-                    <input type="text" id="globalSearch" placeholder="بحث سريع... (Ctrl+K)">
-                    <i class="fas fa-search"></i>
-                    <div id="searchResults" class="search-results"></div>
-                </div>
-                
-                <!-- الإشعارات -->
-                <div class="notifications-container">
-                    <button id="notificationBtn" class="icon-btn">
-                        <i class="fas fa-bell"></i>
-                        <span id="notificationCount" class="badge">3</span>
-                    </button>
-                    <div id="notificationPanel" class="notification-panel">
-                        <div class="notification-header">
-                            <h3>الإشعارات</h3>
-                            <button onclick="markAllAsRead()">تحديد الكل كمقروء</button>
-                        </div>
-                        <div id="notificationList" class="notification-list"></div>
-                    </div>
-                </div>
-                
-                <!-- الوضع الليلي -->
-                <button id="darkModeToggle" class="icon-btn">
-                    <i class="fas fa-moon"></i>
+            <div class="top-bar-right">
+                <button class="lang-toggle" id="langToggle">
+                    <i class="fas fa-globe"></i>
+                    <span>EN</span>
                 </button>
-                
-                <!-- معلومات المستخدم -->
-                <div class="user-menu-container">
-                    <button class="user-menu-toggle" onclick="toggleUserMenu()">
-                        <img class="user-image" src="" alt="المستخدم">
-                        <div class="user-info">
-                            <span class="user-name"></span>
-                            <span class="user-role"></span>
-                        </div>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div id="userMenu" class="user-dropdown">
-                        <a href="settings.html#profile">
-                            <i class="fas fa-user"></i>
-                            الملف الشخصي
-                        </a>
-                        <a href="settings.html">
-                            <i class="fas fa-cog"></i>
-                            الإعدادات
-                        </a>
-                        <hr>
-                        <a href="#" onclick="logout()">
-                            <i class="fas fa-sign-out-alt"></i>
-                            تسجيل الخروج
-                        </a>
-                    </div>
+                <button class="notification-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </button>
+                <div class="user-profile">
+                    <img src="assets/avatar.png" alt="User" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👤</text></svg>'">
+                    <span>مدير النظام</span>
                 </div>
             </div>
         </header>
 
-        <!-- محتوى الصفحة -->
-        <div class="page-content">
-            <!-- قسم الترحيب مع الإحصائيات -->
-            <section class="welcome-stats-section">
-                <div class="welcome-card">
-                    <div class="welcome-content">
-                        <div class="welcome-badge">
-                            <i class="fas fa-sparkles"></i>
-                            <span>مرحباً بعودتك</span>
-                        </div>
-                        <h2>نظام إدارة الجودة المتكامل</h2>
-                        <p>تابع أداء الجودة، وقم بإدارة السجلات، واحصل على تحليلات متقدمة - كل ذلك في مكان واحد</p>
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> <span data-i18n="dashboard">لوحة التحكم</span></h2>
+                    <div class="date-filter">
+                        <button class="btn btn-outline active" data-range="today">اليوم</button>
+                        <button class="btn btn-outline" data-range="week">هذا الأسبوع</button>
+                        <button class="btn btn-outline" data-range="month">هذا الشهر</button>
+                        <button class="btn btn-outline" data-range="year">هذا العام</button>
                     </div>
-                    <div class="welcome-stats">
-                        <div class="welcome-stat">
-                            <div class="stat-icon blue"><i class="fas fa-clipboard-check"></i></div>
-                            <div class="stat-info">
-                                <span class="stat-value" id="totalRecords">0</span>
-                                <span class="stat-label">سجل جودة</span>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card critical">
+                        <div class="kpi-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="kpi-info">
+                            <h3 id="totalDefects">0</h3>
+                            <p data-i18n="totalDefects">إجمالي العيوب</p>
+                        </div>
+                        <div class="kpi-trend down">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>12%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card warning">
+                        <div class="kpi-icon">
+                            <i class="fas fa-calendar-day"></i>
+                        </div>
+                        <div class="kpi-info">
+                            <h3 id="defectsToday">0</h3>
+                            <p data-i18n="defectsToday">عيوب اليوم</p>
+                        </div>
+                        <div class="kpi-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>5%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card info">
+                        <div class="kpi-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="kpi-info">
+                            <h3 id="ppmValue">0</h3>
+                            <p data-i18n="ppm">PPM</p>
+                        </div>
+                        <div class="kpi-trend down">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>8%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card success">
+                        <div class="kpi-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="kpi-info">
+                            <h3 id="openIssues">0 / <span id="closedIssues">0</span></h3>
+                            <p data-i18n="openClosed">مفتوح / مغلق</p>
+                        </div>
+                        <div class="kpi-trend neutral">
+                            <i class="fas fa-minus"></i>
+                            <span>0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 data-i18n="defectsByDept">العيوب حسب القسم</h3>
+                            <button class="btn btn-icon"><i class="fas fa-ellipsis-v"></i></button>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="deptChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 data-i18n="defectsByType">العيوب حسب النوع</h3>
+                            <button class="btn btn-icon"><i class="fas fa-ellipsis-v"></i></button>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="typeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Monthly Trend Chart -->
+                <div class="chart-card full-width">
+                    <div class="chart-header">
+                        <h3 data-i18n="monthlyTrend">الاتجاه الشهري</h3>
+                        <div class="chart-actions">
+                            <button class="btn btn-outline btn-sm" onclick="exportChart('trendChart')">
+                                <i class="fas fa-download"></i> تصدير
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Defects Table -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3 data-i18n="recentDefects">أحدث العيوب</h3>
+                        <a href="#defect-tracking" class="btn btn-link" data-i18n="viewAll">عرض الكل</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="recentDefectsTable">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="id">#</th>
+                                    <th data-i18n="date">التاريخ</th>
+                                    <th data-i18n="department">القسم</th>
+                                    <th data-i18n="defectType">نوع العيب</th>
+                                    <th data-i18n="description">الوصف</th>
+                                    <th data-i18n="severity">الخطورة</th>
+                                    <th data-i18n="status">الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentDefectsBody">
+                                <!-- Dynamic content -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Defect Registration Section -->
+            <section id="defect-registration" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-plus-circle"></i> <span data-i18n="defectRegistration">تسجيل العيوب</span></h2>
+                </div>
+
+                <div class="form-card">
+                    <form id="defectForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="defectDate" data-i18n="date">التاريخ</label>
+                                <input type="date" id="defectDate" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="defectTime" data-i18n="time">الوقت</label>
+                                <input type="time" id="defectTime" class="form-control" required>
                             </div>
                         </div>
-                        <div class="welcome-stat">
-                            <div class="stat-icon green"><i class="fas fa-percentage"></i></div>
-                            <div class="stat-info">
-                                <span class="stat-value" id="qualityRate">0%</span>
-                                <span class="stat-label">معدل الجودة</span>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="department" data-i18n="department">القسم</label>
+                                <select id="department" class="form-control" required>
+                                    <option value="">اختر القسم</option>
+                                    <option value="production">الإنتاج</option>
+                                    <option value="assembly">التجميع</option>
+                                    <option value="packaging">التعبئة</option>
+                                    <option value="quality">الجودة</option>
+                                    <option value="warehouse">المستودع</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="process" data-i18n="process">العملية</label>
+                                <input type="text" id="process" class="form-control" placeholder="اسم العملية">
                             </div>
                         </div>
-                        <div class="welcome-stat">
-                            <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
-                            <div class="stat-info">
-                                <span class="stat-value" id="pendingReviews">0</span>
-                                <span class="stat-label">قيد المراجعة</span>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="partCode" data-i18n="partCode">كود الجزء / الموديل</label>
+                                <input type="text" id="partCode" class="form-control" placeholder="مثال: PRD-001">
                             </div>
+                            <div class="form-group">
+                                <label for="quantity" data-i18n="quantity">الكمية المتأثرة</label>
+                                <input type="number" id="quantity" class="form-control" min="1" value="1">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="defectCategory" data-i18n="defectCategory">فئة العيب</label>
+                                <select id="defectCategory" class="form-control" required>
+                                    <option value="">اختر الفئة</option>
+                                    <option value="dimensional">بعدي</option>
+                                    <option value="visual">بصري</option>
+                                    <option value="functional">وظيفي</option>
+                                    <option value="material">مادي</option>
+                                    <option value="assembly">تجميع</option>
+                                    <option value="other">أخرى</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="severity" data-i18n="severity">الخطورة</label>
+                                <select id="severity" class="form-control" required>
+                                    <option value="low">منخفضة</option>
+                                    <option value="medium" selected>متوسطة</option>
+                                    <option value="high">عالية</option>
+                                    <option value="critical">حرجة</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="defectDescription" data-i18n="defectDescription">وصف العيب</label>
+                            <textarea id="defectDescription" class="form-control" rows="3" placeholder="وصف تفصيلي للعيب..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="rootCause" data-i18n="rootCause">السبب الجذري (أولي)</label>
+                            <textarea id="rootCause" class="form-control" rows="2" placeholder="السبب الجذري المبدئي..."></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="reporterName" data-i18n="reporterName">اسم المبلغ</label>
+                                <input type="text" id="reporterName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="responsiblePerson" data-i18n="responsiblePerson">الشخص المسؤول</label>
+                                <input type="text" id="responsiblePerson" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="defectImage" data-i18n="attachImage">إرفاق صورة</label>
+                            <div class="file-upload">
+                                <input type="file" id="defectImage" accept="image/*" onchange="previewImage(this)">
+                                <label for="defectImage" class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span data-i18n="dragDrop">اسحب الصورة هنا أو انقر للاختيار</span>
+                                </label>
+                                <div class="image-preview" id="imagePreview"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> <span data-i18n="saveDefect">حفظ العيب</span>
+                            </button>
+                            <button type="reset" class="btn btn-outline">
+                                <i class="fas fa-undo"></i> <span data-i18n="reset">إعادة تعيين</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Defect Tracking Section -->
+            <section id="defect-tracking" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-tasks"></i> <span data-i18n="defectTracking">متابعة العيوب</span></h2>
+                    <div class="section-actions">
+                        <button class="btn btn-outline" onclick="exportDefectsToExcel()">
+                            <i class="fas fa-file-excel"></i> <span data-i18n="exportExcel">تصدير Excel</span>
+                        </button>
+                        <button class="btn btn-primary" onclick="document.getElementById('importExcel').click()">
+                            <i class="fas fa-file-import"></i> <span data-i18n="importExcel">استيراد Excel</span>
+                        </button>
+                        <input type="file" id="importExcel" accept=".csv,.xlsx" style="display:none" onchange="importDefectsFromExcel(this)">
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="filter-card">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label data-i18n="department">القسم</label>
+                            <select id="filterDepartment" class="form-control" onchange="applyFilters()">
+                                <option value="">الكل</option>
+                                <option value="production">الإنتاج</option>
+                                <option value="assembly">التجميع</option>
+                                <option value="packaging">التعبئة</option>
+                                <option value="quality">الجودة</option>
+                                <option value="warehouse">المستودع</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label data-i18n="status">الحالة</label>
+                            <select id="filterStatus" class="form-control" onchange="applyFilters()">
+                                <option value="">الكل</option>
+                                <option value="open">مفتوح</option>
+                                <option value="in-progress">قيد المعالجة</option>
+                                <option value="closed">مغلق</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label data-i18n="severity">الخطورة</label>
+                            <select id="filterSeverity" class="form-control" onchange="applyFilters()">
+                                <option value="">الكل</option>
+                                <option value="low">منخفضة</option>
+                                <option value="medium">متوسطة</option>
+                                <option value="high">عالية</option>
+                                <option value="critical">حرجة</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label data-i18n="fromDate">من تاريخ</label>
+                            <input type="date" id="filterFromDate" class="form-control" onchange="applyFilters()">
+                        </div>
+                        <div class="filter-group">
+                            <label data-i18n="toDate">إلى تاريخ</label>
+                            <input type="date" id="filterToDate" class="form-control" onchange="applyFilters()">
+                        </div>
+                        <div class="filter-group">
+                            <button class="btn btn-outline" onclick="clearFilters()">
+                                <i class="fas fa-times"></i> <span data-i18n="clearFilters">مسح</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Defects Table -->
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="data-table" id="defectsTable">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="id">#</th>
+                                    <th data-i18n="date">التاريخ</th>
+                                    <th data-i18n="department">القسم</th>
+                                    <th data-i18n="partCode">كود الجزء</th>
+                                    <th data-i18n="defectType">نوع العيب</th>
+                                    <th data-i18n="description">الوصف</th>
+                                    <th data-i18n="severity">الخطورة</th>
+                                    <th data-i18n="status">الحالة</th>
+                                    <th data-i18n="responsible">المسؤول</th>
+                                    <th data-i18n="actions">إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="defectsTableBody">
+                                <!-- Dynamic content -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination" id="pagination">
+                        <!-- Dynamic pagination -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analysis Section -->
+            <section id="analysis" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-pie"></i> <span data-i18n="analysis">تحليل الجودة</span></h2>
+                </div>
+
+                <!-- Pareto Analysis -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 data-i18n="paretoAnalysis">تحليل باريتو (80/20)</h3>
+                        <p class="chart-description" data-i18n="paretoDesc">تحديد العيوب الأكثر تأثيراً</p>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="paretoChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Root Cause Analysis - Fishbone -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 data-i18n="fishboneAnalysis">تحليل السبب الجذري (هيكل السمكة)</h3>
+                        <div class="fishbone-controls">
+                            <select id="fishboneDefect" class="form-control" onchange="updateFishbone()">
+                                <option value="">اختر العيب للتحليل</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="fishbone-container" id="fishboneContainer">
+                        <div class="fishbone-diagram">
+                            <div class="fishbone-spine"></div>
+                            <div class="fishbone-head">
+                                <span data-i18n="problem">المشكلة</span>
+                            </div>
+                            <div class="fishbone-categories">
+                                <div class="category" data-category="man">
+                                    <span class="category-label">Man</span>
+                                    <div class="category-line"></div>
+                                </div>
+                                <div class="category" data-category="machine">
+                                    <span class="category-label">Machine</span>
+                                    <div class="category-line"></div>
+                                </div>
+                                <div class="category" data-category="material">
+                                    <span class="category-label">Material</span>
+                                    <div class="category-line"></div>
+                                </div>
+                                <div class="category" data-category="method">
+                                    <span class="category-label">Method</span>
+                                    <div class="category-line"></div>
+                                </div>
+                                <div class="category" data-category="environment">
+                                    <span class="category-label">Environment</span>
+                                    <div class="category-line"></div>
+                                </div>
+                                <div class="category" data-category="measurement">
+                                    <span class="category-label">Measurement</span>
+                                    <div class="category-line"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fishbone-editor">
+                            <h4 data-i18n="addCauses">إضافة أسباب</h4>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <select id="causeCategory" class="form-control">
+                                        <option value="man">Man (الإنسان)</option>
+                                        <option value="machine">Machine (الآلة)</option>
+                                        <option value="material">Material (المادة)</option>
+                                        <option value="method">Method (الطريقة)</option>
+                                        <option value="environment">Environment (البيئة)</option>
+                                        <option value="measurement">Measurement (القياس)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="causeText" class="form-control" placeholder="السبب...">
+                                </div>
+                                <button class="btn btn-primary" onclick="addCause()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <div class="causes-list" id="causesList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5 Why Analysis -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 data-i18n="fiveWhyAnalysis">تحليل 5 Why</h3>
+                    </div>
+                    <div class="five-why-container">
+                        <div class="form-group">
+                            <label data-i18n="problemStatement">بيان المشكلة</label>
+                            <input type="text" id="fiveWhyProblem" class="form-control" placeholder="ما هي المشكلة؟">
+                        </div>
+                        <div class="five-why-chain" id="fiveWhyChain">
+                            <div class="why-item">
+                                <span class="why-number">1</span>
+                                <div class="why-content">
+                                    <label>Why? (لماذا؟)</label>
+                                    <input type="text" class="form-control why-answer" placeholder="الإجابة...">
+                                </div>
+                            </div>
+                            <div class="why-item">
+                                <span class="why-number">2</span>
+                                <div class="why-content">
+                                    <label>Why? (لماذا؟)</label>
+                                    <input type="text" class="form-control why-answer" placeholder="الإجابة...">
+                                </div>
+                            </div>
+                            <div class="why-item">
+                                <span class="why-number">3</span>
+                                <div class="why-content">
+                                    <label>Why? (لماذا؟)</label>
+                                    <input type="text" class="form-control why-answer" placeholder="الإجابة...">
+                                </div>
+                            </div>
+                            <div class="why-item">
+                                <span class="why-number">4</span>
+                                <div class="why-content">
+                                    <label>Why? (لماذا؟)</label>
+                                    <input type="text" class="form-control why-answer" placeholder="الإجابة...">
+                                </div>
+                            </div>
+                            <div class="why-item">
+                                <span class="why-number">5</span>
+                                <div class="why-content">
+                                    <label>Why? (لماذا؟)</label>
+                                    <input type="text" class="form-control why-answer" placeholder="الإجابة...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="root-cause-result">
+                            <label data-i18n="rootCauseFound">السبب الجذري:</label>
+                            <textarea id="rootCauseResult" class="form-control" rows="2" readonly></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="analyzeFiveWhy()">
+                            <i class="fas fa-search"></i> <span data-i18n="analyze">تحليل</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PPM & Yield Calculator -->
+                <div class="charts-row">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 data-i18n="ppmCalculator">حاسبة PPM</h3>
+                        </div>
+                        <div class="calculator-form">
+                            <div class="form-group">
+                                <label data-i18n="totalProduced">إجمالي الإنتاج</label>
+                                <input type="number" id="totalProduced" class="form-control" onchange="calculatePPM()">
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="totalDefects">إجمالي العيوب</label>
+                                <input type="number" id="totalDefectsCalc" class="form-control" onchange="calculatePPM()">
+                            </div>
+                            <div class="calculation-result">
+                                <div class="result-item">
+                                    <span class="result-label">PPM:</span>
+                                    <span class="result-value" id="ppmResult">0</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label" data-i18n="yieldRate">معدل العائد:</span>
+                                    <span class="result-value" id="yieldResult">0%</span>
+                                </div>
+                                <div class="result-item">
+                                    <span class="result-label" data-i18n="defectRate">معدل العيوب:</span>
+                                    <span class="result-value" id="defectRateResult">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 data-i18n="trendAnalysis">تحليل الاتجاه</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="analysisTrendChart"></canvas>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- البطاقات السريعة -->
-            <section class="quick-actions">
-                <h3 class="section-title">
-                    <i class="fas fa-bolt"></i>
-                    وصول سريع
-                </h3>
-                <div class="actions-grid">
-                    <a href="data.html" class="action-card blue">
-                        <div class="action-icon"><i class="fas fa-plus-circle"></i></div>
-                        <div class="action-content">
-                            <span class="action-title">إضافة سجل</span>
-                            <span class="action-desc">تسجيل بيانات جودة جديدة</span>
-                        </div>
-                        <i class="fas fa-arrow-left action-arrow"></i>
-                    </a>
-                    <a href="records.html" class="action-card green">
-                        <div class="action-icon"><i class="fas fa-list"></i></div>
-                        <div class="action-content">
-                            <span class="action-title">عرض السجلات</span>
-                            <span class="action-desc">استعراض جميع السجلات</span>
-                        </div>
-                        <i class="fas fa-arrow-left action-arrow"></i>
-                    </a>
-                    <a href="analytics.html" class="action-card purple">
-                        <div class="action-icon"><i class="fas fa-chart-bar"></i></div>
-                        <div class="action-content">
-                            <span class="action-title">التقارير</span>
-                            <span class="action-desc">تحليلات وإحصائيات</span>
-                        </div>
-                        <i class="fas fa-arrow-left action-arrow"></i>
-                    </a>
-                    <a href="library.html" class="action-card orange">
-                        <div class="action-icon"><i class="fas fa-book"></i></div>
-                        <div class="action-content">
-                            <span class="action-title">المكتبة</span>
-                            <span class="action-desc">المستندات والموارد</span>
-                        </div>
-                        <i class="fas fa-arrow-left action-arrow"></i>
-                    </a>
+            <!-- Prediction Section -->
+            <section id="prediction" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-brain"></i> <span data-i18n="prediction">التنبؤ والتوقع</span></h2>
                 </div>
-            </section>
 
-            <!-- المخططات التفاعلية -->
-            <section class="charts-section">
-                <div class="charts-header">
-                    <h3 class="section-title">
-                        <i class="fas fa-chart-line"></i>
-                        نظرة عامة على الأداء
-                    </h3>
-                    <div class="period-selector">
-                        <button class="period-btn active" data-period="week">أسبوع</button>
-                        <button class="period-btn" data-period="month">شهر</button>
-                        <button class="period-btn" data-period="quarter">ربع سنة</button>
-                        <button class="period-btn" data-period="year">سنة</button>
+                <!-- Risk Indicator -->
+                <div class="risk-indicator-card">
+                    <div class="risk-level" id="riskLevel">
+                        <div class="risk-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="risk-info">
+                            <h3 data-i18n="currentRiskLevel">مستوى الخطر الحالي</h3>
+                            <span class="risk-badge low" id="riskBadge">منخفض</span>
+                        </div>
+                    </div>
+                    <div class="risk-factors">
+                        <div class="factor">
+                            <span class="factor-label" data-i18n="defectTrend">اتجاه العيوب</span>
+                            <span class="factor-value trend-down" id="defectTrend">
+                                <i class="fas fa-arrow-down"></i> -12%
+                            </span>
+                        </div>
+                        <div class="factor">
+                            <span class="factor-label" data-i18n="openIssues">القضايا المفتوحة</span>
+                            <span class="factor-value" id="openIssuesCount">5</span>
+                        </div>
+                        <div class="factor">
+                            <span class="factor-label" data-i18n="avgResolutionTime">متوسط وقت الحل</span>
+                            <span class="factor-value" id="avgResolutionTime">2.5 يوم</span>
+                        </div>
                     </div>
                 </div>
-                <div class="charts-grid">
-                    <div class="chart-card main-chart">
+
+                <!-- Prediction Charts -->
+                <div class="charts-row">
+                    <div class="chart-card">
                         <div class="chart-header">
-                            <h4>معدل الجودة عبر الوقت</h4>
-                            <div class="chart-legend">
-                                <span class="legend-item"><span class="legend-dot primary"></span>الجودة الفعلية</span>
-                                <span class="legend-item"><span class="legend-dot target"></span>الهدف</span>
+                            <h3 data-i18n="futureDefects">التنبؤ بالعيوب المستقبلية</h3>
+                            <p class="chart-description" data-i18n="next30Days">الـ 30 يوم القادمة</p>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="predictionChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 data-i18n="riskDistribution">توزيع المخاطر</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="riskChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prediction Settings -->
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 data-i18n="predictionSettings">إعدادات التنبؤ</h3>
+                    </div>
+                    <div class="prediction-settings">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label data-i18n="predictionPeriod">فترة التنبؤ</label>
+                                <select id="predictionPeriod" class="form-control" onchange="updatePrediction()">
+                                    <option value="7">7 أيام</option>
+                                    <option value="30" selected>30 يوم</option>
+                                    <option value="90">3 أشهر</option>
+                                    <option value="180">6 أشهر</option>
+                                </select>
                             </div>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="mainQualityChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="chart-card side-chart">
-                        <div class="chart-header">
-                            <h4>توزيع حالات السجلات</h4>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="statusDoughnutChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="chart-card side-chart">
-                        <div class="chart-header">
-                            <h4>أداء الموديلات</h4>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="modelsBarChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- قسم منظم: مصطلحات + النشاطات -->
-            <section class="split-section">
-                <!-- مصطلحات الجودة -->
-                <div class="terms-section">
-                    <div class="section-header">
-                        <h3 class="section-title">
-                            <i class="fas fa-book-open"></i>
-                            مصطلحات الجودة
-                        </h3>
-                        <div class="section-actions">
-                            <div class="search-box">
-                                <input type="text" id="termsSearch" placeholder="بحث...">
-                                <i class="fas fa-search"></i>
+                            <div class="form-group">
+                                <label data-i18n="confidenceLevel">مستوى الثقة</label>
+                                <select id="confidenceLevel" class="form-control" onchange="updatePrediction()">
+                                    <option value="0.8">80%</option>
+                                    <option value="0.9" selected>90%</option>
+                                    <option value="0.95">95%</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-i18n="seasonality">الموسمية</label>
+                                <select id="seasonality" class="form-control" onchange="updatePrediction()">
+                                    <option value="none">بدون</option>
+                                    <option value="weekly" selected>أسبوعية</option>
+                                    <option value="monthly">شهرية</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div class="filter-chips">
-                        <button class="filter-chip active" data-filter="all">الكل</button>
-                        <button class="filter-chip" data-filter="iso">معايير ISO</button>
-                        <button class="filter-chip" data-filter="tools">أدوات</button>
-                        <button class="filter-chip" data-filter="concepts">مفاهيم</button>
-                    </div>
-                    <div id="termsGrid" class="terms-grid"></div>
                 </div>
 
-                <!-- آخر النشاطات -->
-                <div class="activity-section">
-                    <div class="section-header">
-                        <h3 class="section-title">
-                            <i class="fas fa-history"></i>
-                            آخر النشاطات
-                        </h3>
-                        <a href="#" class="view-all">عرض الكل</a>
+                <!-- Alerts & Recommendations -->
+                <div class="alerts-card">
+                    <div class="alerts-header">
+                        <h3><i class="fas fa-bell"></i> <span data-i18n="alertsRecommendations">التنبيهات والتوصيات</span></h3>
                     </div>
-                    <div id="activityList" class="activity-list"></div>
+                    <div class="alerts-list" id="alertsList">
+                        <!-- Dynamic alerts -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Library Section -->
+            <section id="library" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-book"></i> <span data-i18n="library">مكتبة الجودة</span></h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" onclick="document.getElementById('uploadDocument').click()">
+                            <i class="fas fa-upload"></i> <span data-i18n="uploadDocument">رفع مستند</span>
+                        </button>
+                        <input type="file" id="uploadDocument" style="display:none" onchange="uploadDocument(this)">
+                    </div>
+                </div>
+
+                <!-- Library Categories -->
+                <div class="library-categories">
+                    <div class="category-card active" data-category="all" onclick="filterLibrary('all')">
+                        <i class="fas fa-th-large"></i>
+                        <span data-i18n="allDocuments">الكل</span>
+                    </div>
+                    <div class="category-card" data-category="sop" onclick="filterLibrary('sop')">
+                        <i class="fas fa-file-alt"></i>
+                        <span data-i18n="sops">إجراءات العمل</span>
+                    </div>
+                    <div class="category-card" data-category="wi" onclick="filterLibrary('wi')">
+                        <i class="fas fa-tasks"></i>
+                        <span data-i18n="workInstructions">تعليمات العمل</span>
+                    </div>
+                    <div class="category-card" data-category="checklist" onclick="filterLibrary('checklist')">
+                        <i class="fas fa-check-square"></i>
+                        <span data-i18n="checklists">قوائم الفحص</span>
+                    </div>
+                    <div class="category-card" data-category="standard" onclick="filterLibrary('standard')">
+                        <i class="fas fa-certificate"></i>
+                        <span data-i18n="standards">معايير الجودة</span>
+                    </div>
+                </div>
+
+                <!-- Documents Grid -->
+                <div class="documents-grid" id="documentsGrid">
+                    <!-- Dynamic documents -->
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cog"></i> <span data-i18n="settings">الإعدادات</span></h2>
+                </div>
+
+                <div class="settings-grid">
+                    <!-- General Settings -->
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <i class="fas fa-sliders-h"></i>
+                            <h3 data-i18n="generalSettings">إعدادات عامة</h3>
+                        </div>
+                        <div class="settings-body">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label data-i18n="language">اللغة</label>
+                                    <p data-i18n="languageDesc">اختر لغة الواجهة</p>
+                                </div>
+                                <select id="language" class="form-control" onchange="changeLanguage()">
+                                    <option value="ar">العربية</option>
+                                    <option value="en">English</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label data-i18n="dateFormat">تنسيق التاريخ</label>
+                                    <p data-i18n="dateFormatDesc">تنسيق عرض التاريخ</p>
+                                </div>
+                                <select id="dateFormat" class="form-control">
+                                    <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                    <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label data-i18n="notifications">الإشعارات</label>
+                                    <p data-i18n="notificationsDesc">تفعيل الإشعارات</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Management -->
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <i class="fas fa-database"></i>
+                            <h3 data-i18n="dataManagement">إدارة البيانات</h3>
+                        </div>
+                        <div class="settings-body">
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label data-i18n="exportData">تصدير البيانات</label>
+                                    <p data-i18n="exportDataDesc">تصدير جميع البيانات</p>
+                                </div>
+                                <button class="btn btn-outline" onclick="exportAllData()">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label data-i18n="importData">استيراد البيانات</label>
+                                    <p data-i18n="importDataDesc">استيراد البيانات من ملف</p>
+                                </div>
+                                <button class="btn btn-outline" onclick="document.getElementById('importDataFile').click()">
+                                    <i class="fas fa-upload"></i>
+                                </button>
+                                <input type="file" id="importDataFile" style="display:none" onchange="importAllData(this)">
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <label data-i18n="clearData">مسح البيانات</label>
+                                    <p data-i18n="clearDataDesc">حذف جميع البيانات</p>
+                                </div>
+                                <button class="btn btn-danger" onclick="clearAllData()">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master Data -->
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <i class="fas fa-list"></i>
+                            <h3 data-i18n="masterData">البيانات الأساسية</h3>
+                        </div>
+                        <div class="settings-body">
+                            <div class="master-data-section">
+                                <h4 data-i18n="departments">الأقسام</h4>
+                                <div class="tags-input" id="departmentsTags">
+                                    <input type="text" placeholder="أضف قسم..." onkeypress="addTag(event, 'departments')">
+                                </div>
+                            </div>
+                            <div class="master-data-section">
+                                <h4 data-i18n="defectTypes">أنواع العيوب</h4>
+                                <div class="tags-input" id="defectTypesTags">
+                                    <input type="text" placeholder="أضف نوع..." onkeypress="addTag(event, 'defectTypes')">
+                                </div>
+                            </div>
+                            <div class="master-data-section">
+                                <h4 data-i18n="models">الموديلات</h4>
+                                <div class="tags-input" id="modelsTags">
+                                    <input type="text" placeholder="أضف موديل..." onkeypress="addTag(event, 'models')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- About -->
+                    <div class="settings-card">
+                        <div class="settings-header">
+                            <i class="fas fa-info-circle"></i>
+                            <h3 data-i18n="about">حول النظام</h3>
+                        </div>
+                        <div class="settings-body">
+                            <div class="about-info">
+                                <div class="logo-large">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h4>نظام إدارة الجودة (QMS)</h4>
+                                <p>الإصدار 1.0.0</p>
+                                <p>نظام متكامل لإدارة الجودة والعيوب</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
-
-        <!-- التذييل -->
-        <footer class="main-footer">
-            <div class="footer-content">
-                <p>&copy; 2024 نظام إدارة الجودة - جميع الحقوق محفوظة</p>
-                <div class="footer-links">
-                    <a href="#">الدعم الفني</a>
-                    <a href="#">الشروط والأحكام</a>
-                    <a href="#">سياسة الخصوصية</a>
-                </div>
-            </div>
-        </footer>
     </main>
 
-    <!-- Toast Container -->
-    <div id="toastContainer" class="toast-container"></div>
+    <!-- Modal for Defect Details -->
+    <div class="modal" id="defectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-i18n="defectDetails">تفاصيل العيب</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()" data-i18n="close">إغلاق</button>
+                <button class="btn btn-primary" onclick="saveDefectChanges()" data-i18n="saveChanges">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
 
-    <!-- Scripts -->
-    <script src="js/login.js"></script>
-    <script src="js/header.js"></script>
-    <script src="js/home.js"></script>
-    <script src="js/functions.js"></script>
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- JavaScript Files -->
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/defects.js"></script>
+    <script src="js/analysis.js"></script>
+    <script src="js/prediction.js"></script>
 </body>
 </html>
