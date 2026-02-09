@@ -3,34 +3,19 @@
 // ===========================================
 
 // ========================
-// 📦 بيانات الموديلات
-// ========================
-const models = [
-    { code: "MOD001", name: "موديل ألفا", number: "001", type: "نوع أ", mDay: "يوم 1", pdnS: "PDN-001", dftS: "DFT-001", target: 95 },
-    { code: "MOD002", name: "موديل بيتا", number: "002", type: "نوع ب", mDay: "يوم 2", pdnS: "PDN-002", dftS: "DFT-002", target: 92 },
-    { code: "MOD003", name: "موديل غاما", number: "003", type: "نوع ج", mDay: "يوم 3", pdnS: "PDN-003", dftS: "DFT-003", target: 98 },
-    { code: "MOD004", name: "موديل دلتا", number: "004", type: "نوع د", mDay: "يوم 4", pdnS: "PDN-004", dftS: "DFT-004", target: 90 },
-    { code: "MOD005", name: "موديل إبسلون", number: "005", type: "نوع أ", mDay: "يوم 5", pdnS: "PDN-005", dftS: "DFT-005", target: 96 },
-    { code: "MOD006", name: "موديل زيتا", number: "006", type: "نوع ب", mDay: "يوم 6", pdnS: "PDN-006", dftS: "DFT-006", target: 94 },
-    { code: "MOD007", name: "موديل إيتا", number: "007", type: "نوع ج", mDay: "يوم 7", pdnS: "PDN-007", dftS: "DFT-007", target: 97 },
-    { code: "MOD008", name: "موديل ثيتا", number: "008", type: "نوع د", mDay: "يوم 8", pdnS: "PDN-008", dftS: "DFT-008", target: 93 }
-];
-
-// ========================
 // 🚀 تهيئة الصفحة
 // ========================
 document.addEventListener('DOMContentLoaded', function() {
-    // تهيئة نموذج التاريخ
     initDateForm();
-    
-    // تهيئة البحث التلقائي
-    initModelAutocomplete();
-    
-    // تحميل جدول الموديلات
-    loadModelsTable();
-    
-    // إعداد مستمعي الأحداث
     setupEventListeners();
+
+    // 🔹 تحميل بيانات الموديل من Supabase عند إدخال الكود
+    const modelCodeInput = document.getElementById("model-code");
+    if (modelCodeInput) {
+        modelCodeInput.addEventListener("blur", function () {
+            loadModelByCode(this.value.trim());
+        });
+    }
 });
 
 // ========================
@@ -87,91 +72,83 @@ function getWeekNumber(d) {
 
 // ========================
 // 🔍 تهيئة البحث التلقائي
-// ========================
-function initModelAutocomplete() {
-    const modelCodeInput = document.getElementById('model-code');
-    const suggestionsList = document.getElementById('model-suggestions');
 
-    if (!modelCodeInput || !suggestionsList) return;
-
-    modelCodeInput.addEventListener('input', function() {
-        const value = this.value.trim().toUpperCase();
-        suggestionsList.innerHTML = '';
-        suggestionsList.style.display = 'none';
-
-        if (value.length === 0) return;
-
-        const filteredModels = models.filter(model =>
-            model.code.toUpperCase().includes(value)
-        );
-
-        if (filteredModels.length > 0) {
-            filteredModels.forEach(model => {
-                const li = document.createElement('li');
-                li.textContent = `${model.code} - ${model.name}`;
-                li.addEventListener('click', () => {
-                    modelCodeInput.value = model.code;
-                    fillModelFields(model);
-                    suggestionsList.style.display = 'none';
-                });
-                suggestionsList.appendChild(li);
-            });
-            suggestionsList.style.display = 'block';
-        }
-    });
-
-    // إخفاء القائمة عند النقر خارجها
-    document.addEventListener('click', (e) => {
-        if (e.target !== modelCodeInput) {
-            suggestionsList.style.display = 'none';
-        }
-    });
-}
 
 // ========================
 // 📝 تعبئة حقول الموديل
 // ========================
-function fillModelFields(model) {
-    document.getElementById('model-name').value = model.name;
-    document.getElementById('model-number').value = model.number;
-    document.getElementById('model-type').value = model.type;
-    document.getElementById('m-day').value = model.mDay;
-    document.getElementById('pdn-s').value = model.pdnS;
-    document.getElementById('dft-s').value = model.dftS;
+
+async function loadModelByCode(modelCode) {
+
+    if (!modelCode) return;
+
+    const { data, error } = await window.supabaseClient
+        .from("models")
+        .select(`
+            model,
+            model_name,
+            section,
+            model_type,
+            cooling_type,
+            man_day,
+            capacity,
+            model_class,
+            power_min,
+            power_max,
+            current_min,
+            current_max
+        `)
+        .eq("model_code", modelCode)
+        .single();
+
+    if (error || !data) {
+        console.error(error);
+        alert("❌ كود الموديل غير موجود");
+        clearModelFields();
+        return;
+    }
+
+    // تعبئة الحقول تلقائي
+    document.getElementById("model").value = data.model ?? "";
+    document.getElementById("model-name").value = data.model_name ?? "";
+    document.getElementById("section").value = data.section ?? "";
+    document.getElementById("model-type").value = data.model_type ?? "";
+    document.getElementById("cooling_type").value = data.cooling_type ?? "";
+    document.getElementById("man_day").value = data.man_day ?? "";
+    document.getElementById("capacity").value = data.capacity ?? "";
+    document.getElementById("model_class").value = data.model_class ?? "";
+    document.getElementById("power_min").value = data.power_min ?? "";
+    document.getElementById("power_max").value = data.power_max ?? "";
+    document.getElementById("current_min").value = data.current_min ?? "";
+    document.getElementById("current_max").value = data.current_max ?? "";
+}
+
+
+
+
+function clearModelFields() {
+    [
+        "model",
+        "model-name",
+        "section",
+        "model-type",
+        "cooling_type",
+        "man_day",
+        "capacity",
+        "model_class",
+        "power_min",
+        "power_max",
+        "current_min",
+        "current_max"
+    ].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+    });
 }
 
 // ========================
 // 📋 تحميل جدول الموديلات
 // ========================
-function loadModelsTable() {
-    const tableBody = document.getElementById('modelsTable');
-    if (!tableBody) return;
-
-    tableBody.innerHTML = models.map(model => `
-        <tr>
-            <td><strong>${model.code}</strong></td>
-            <td>${model.name}</td>
-            <td>${model.number}</td>
-            <td>${model.type}</td>
-            <td>${model.mDay}</td>
-            <td>${model.pdnS}</td>
-            <td>${model.dftS}</td>
-            <td>
-                <div class="action-btns">
-                    <button class="action-btn view" onclick="viewModel('${model.code}')" title="عرض">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                    <button class="action-btn edit" onclick="editModel('${model.code}')" title="تعديل">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="action-btn delete" onclick="deleteModel('${model.code}')" title="حذف">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </td>
-        </tr>
-    `).join('');
-}
 
 // ========================
 // 🎧 إعداد مستمعي الأحداث
