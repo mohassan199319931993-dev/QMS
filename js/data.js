@@ -217,6 +217,17 @@ function setupEventListeners() {
 async function handleFormSubmit(e) {
     e.preventDefault();
 
+    console.log("🚀 Submit Fired");
+
+    if (!window.supabaseClient) {
+        console.error("❌ Supabase Client Not Loaded");
+        showToast("Supabase غير متصل", "error");
+        return;
+    }
+
+    const supabaseClient = window.supabaseClient;
+
+
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
