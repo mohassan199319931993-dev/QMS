@@ -214,69 +214,90 @@ function setupEventListeners() {
 // ========================
 // 📤 معالجة إرسال النموذج مع Supabase
 // ========================
+// ========================
+// 📤 معالجة إرسال النموذج مع Supabase
+// ========================
 async function handleFormSubmit(e) {
     e.preventDefault();
 
     console.log("🚀 Submit Fired");
 
+    // 1️⃣ تأكد إن Supabase Client موجود
     if (!window.supabaseClient) {
         console.error("❌ Supabase Client Not Loaded");
-        showToast("Supabase غير متصل", "error");
+        alert("Supabase غير متصل");
         return;
     }
 
-    const supabaseClient = window.supabaseClient;
+    const supabase = window.supabaseClient;
 
-
-    const formData = new FormData(e.target);
+    // 2️⃣ قراءة بيانات الفورم
+    const form = e.target;
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
-    // التحقق من الحقول المطلوبة
-    if (!data.datetime || !data['model-code'] || !data.quantity) {
-        showToast('الرجاء ملء جميع الحقول المطلوبة', 'error');
+    console.log("📦 Form Data:", data);
+
+    // 3️⃣ التحقق من الحقول المطلوبة
+    if (!data.datetime || !data["model-code"] || !data.quantity) {
+        alert("❌ الرجاء ملء جميع الحقول المطلوبة");
         return;
     }
 
-    // تجهيز السجل للإرسال
+    // 4️⃣ تجهيز البيانات للإدخال (لازم تطابق أعمدة الجدول)
     const record = {
         datetime: data.datetime,
-        year: data.year,
-        quarter: data.quarter,
-        month: data.month,
-        week: data.week,
-        shift: data.shift,
-        hour: data.hour,
+        year: Number(data.year) || null,
+        quarter: data.quarter || null,
+        month: data.month || null,
+        week: data.week || null,
+        shift: data.shift || null,
+        hour: data.hour || null,
 
-        model_code: data['model-code'],
-        model_name: document.getElementById('model-name').value,
-        model_number: document.getElementById('model-number').value,
-        model_type: document.getElementById('model-type').value,
-        m_day: document.getElementById('m-day').value,
-        pdn_s: document.getElementById('pdn-s').value,
-        dft_s: document.getElementById('dft-s').value,
-        target: document.getElementById('target') ? Number(document.getElementById('target').value) : null,
+        model_code: data["model-code"],
+        model_name: document.getElementById("model-name")?.value || null,
+        model_number: document.getElementById("model-number")?.value || null,
+        model_type: document.getElementById("model-type")?.value || null,
+
+        m_day: document.getElementById("m-day")?.value || null,
+        pdn_s: document.getElementById("pdn-s")?.value || null,
+        dft_s: document.getElementById("dft-s")?.value || null,
+        target: document.getElementById("target")
+            ? Number(document.getElementById("target").value)
+            : null,
 
         quantity: Number(data.quantity),
-        defect_count: Number(data['defect-count'] || 0),
-        quality_rate: Number(data['quality-rate'] || 0),
+        defect_count: Number(data["defect-count"] || 0),
+        quality_rate: Number(data["quality-rate"] || 0),
 
         result: data.result || null,
         status: data.status || null,
         notes: data.notes || null
     };
 
+    console.log("🧾 Record To Insert:", record);
+
+    // 5️⃣ الإرسال إلى Supabase
     try {
-        const { error } = await supabaseClient
-            .from('records')
-            .insert([record]);
+        const { data: insertedData, error } = await supabase
+            .from("records") // ⚠️ لازم اسم الجدول يكون موجود في Supabase
+            .insert(record)
+            .select();
 
-        if (error) throw error;
+        if (error) {
+            console.error("❌ Supabase Error:", error);
+            alert("خطأ في الحفظ: " + error.message);
+            return;
+        }
 
-        showToast('تم حفظ السجل بنجاح ✅', 'success');
-        resetForm();
+        console.log("✅ Inserted Successfully:", insertedData);
+        alert("✅ تم حفظ البيانات بنجاح");
+
+        form.reset();
+
     } catch (err) {
-        console.error(err);
-        showToast('حصل خطأ أثناء الحفظ ❌', 'error');
+        console.error("🔥 Unexpected Error:", err);
+        alert("❌ حصل خطأ غير متوقع");
     }
 }
 
