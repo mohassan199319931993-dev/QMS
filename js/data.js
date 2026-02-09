@@ -81,7 +81,8 @@ function getWeekNumber(d) {
 async function loadModelByCode(modelCode) {
     if (!modelCode) return;
 
-    modelCode = modelCode.trim().toUpperCase(); // تنظيف الكود
+    modelCode = modelCode.trim(); // إزالة مسافات
+    // modelCode = modelCode.toUpperCase(); // لو تحب تطابق كل شيء بالحروف الكبيرة
 
     const { data, error } = await window.supabaseClient
         .from("models")
@@ -99,8 +100,8 @@ async function loadModelByCode(modelCode) {
             current_min,
             current_max
         `)
-        .eq("model_code", modelCode)
-        .maybeSingle(); // بدل single() لتجنب الخطأ لو مش موجود
+        .ilike("model_code", modelCode) // تجاهل حالة الأحرف
+        .maybeSingle();
 
     if (error) {
         console.error(error);
@@ -129,7 +130,6 @@ async function loadModelByCode(modelCode) {
     document.getElementById("current_min").value = data.current_min ?? "";
     document.getElementById("current_max").value = data.current_max ?? "";
 }
-
 
 
 
