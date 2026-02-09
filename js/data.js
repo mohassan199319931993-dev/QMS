@@ -79,8 +79,9 @@ function getWeekNumber(d) {
 // ========================
 
 async function loadModelByCode(modelCode) {
-
     if (!modelCode) return;
+
+    modelCode = modelCode.trim().toUpperCase(); // تنظيف الكود
 
     const { data, error } = await window.supabaseClient
         .from("models")
@@ -99,10 +100,16 @@ async function loadModelByCode(modelCode) {
             current_max
         `)
         .eq("model_code", modelCode)
-        .single();
+        .maybeSingle(); // بدل single() لتجنب الخطأ لو مش موجود
 
-    if (error || !data) {
+    if (error) {
         console.error(error);
+        alert("❌ خطأ في تحميل الموديل");
+        clearModelFields();
+        return;
+    }
+
+    if (!data) {
         alert("❌ كود الموديل غير موجود");
         clearModelFields();
         return;
