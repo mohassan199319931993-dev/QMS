@@ -370,29 +370,42 @@ function updateDateTime() {
 }
 
 // ========================
-// 📱 إعداد القائمة المتنقلة
+// ========================
+// 📱 إعداد القائمة المتنقلة (Desktop + Mobile)
 // ========================
 function setupMobileMenu() {
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
-    
+
     if (!menuToggle || !sidebar) return;
-    
-    menuToggle.addEventListener('click', function() {
-        sidebar.classList.toggle('collapsed');
-        document.body.classList.toggle('sidebar-collapsed');
-        
-        const isCollapsed = sidebar.classList.contains('collapsed');
-        localStorage.setItem('qc_sidebar_collapsed', isCollapsed);
+
+    menuToggle.addEventListener('click', function () {
+        // 📱 موبايل / تابلت
+        if (window.innerWidth <= 1024) {
+            sidebar.classList.toggle('open');
+        }
+        // 🖥️ ديسكتوب
+        else {
+            sidebar.classList.toggle('collapsed');
+            document.body.classList.toggle('sidebar-collapsed');
+
+            localStorage.setItem(
+                'qc_sidebar_collapsed',
+                sidebar.classList.contains('collapsed')
+            );
+        }
     });
-    
-    // استعادة الحالة المحفوظة
-    const savedState = localStorage.getItem('qc_sidebar_collapsed') === 'true';
-    if (savedState) {
-        sidebar.classList.add('collapsed');
-        document.body.classList.add('sidebar-collapsed');
+
+    // 🖥️ استعادة حالة الديسكتوب فقط
+    if (window.innerWidth > 1024) {
+        const savedState = localStorage.getItem('qc_sidebar_collapsed') === 'true';
+        if (savedState) {
+            sidebar.classList.add('collapsed');
+            document.body.classList.add('sidebar-collapsed');
+        }
     }
 }
+
 
 // ========================
 // 👤 تبديل قائمة المستخدم
