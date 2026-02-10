@@ -356,74 +356,32 @@
 /* ================================
    التصميم المتجاوب
    ================================ */
-@media (max-width: 1200px) {
-    .actions-grid {
-        grid-template-columns: repeat(2, 1fr);
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
     }
     
-    .charts-grid {
-        grid-template-columns: 1fr 1fr;
+    .form-actions {
+        flex-direction: column-reverse;
     }
     
-    .chart-card.main-chart {
-        grid-column: span 2;
-    }
-}
-
-@media (max-width: 992px) {
-    .welcome-card {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .welcome-stats {
+    .form-actions .btn {
         width: 100%;
         justify-content: center;
     }
     
-    .split-section {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 768px) {
-    .actions-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .charts-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .chart-card.main-chart {
-        grid-column: span 1;
-    }
-    
-    .charts-header {
+    .section-header {
         flex-direction: column;
         align-items: flex-start;
         gap: var(--spacing-3);
     }
     
-    .period-selector {
+    .section-actions {
         width: 100%;
-        overflow-x: auto;
     }
     
-    .terms-grid {
-        grid-template-columns: 1fr;
+    .section-actions .btn {
+        flex: 1;
+        justify-content: center;
     }
-    
-    .welcome-stats {
-        flex-direction: column;
-    }
-}
-@media (max-width: 480px) {
-  .data-form {
-    padding: var(--spacing-4);
-  }
-
-  .form-header {
-    padding: var(--spacing-4);
-  }
 }
