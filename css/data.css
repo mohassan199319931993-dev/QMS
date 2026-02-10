@@ -356,32 +356,30 @@
 /* ================================
    التصميم المتجاوب
    ================================ */
-@media (max-width: 768px) {
-    .form-row {
-        grid-template-columns: 1fr;
+@media (max-width: 1024px) {
+    .sidebar {
+        transform: translateX(100%);
+        transition: transform var(--transition-base);
     }
-    
-    .form-actions {
-        flex-direction: column-reverse;
+
+    .sidebar.open {
+        transform: translateX(0);
     }
-    
-    .form-actions .btn {
-        width: 100%;
-        justify-content: center;
+
+    .main-content {
+        margin-right: 0 !important;
     }
-    
-    .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: var(--spacing-3);
-    }
-    
-    .section-actions {
+}
+@media (max-width: 600px) {
+    .sidebar {
         width: 100%;
     }
-    
-    .section-actions .btn {
-        flex: 1;
-        justify-content: center;
+
+    .header-title {
+        font-size: 16px;
+    }
+
+    .main-content {
+        padding: 12px;
     }
 }
