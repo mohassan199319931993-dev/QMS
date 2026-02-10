@@ -418,3 +418,12 @@
         flex-direction: column;
     }
 }
+@media (max-width: 480px) {
+  .data-form {
+    padding: var(--spacing-4);
+  }
+
+  .form-header {
+    padding: var(--spacing-4);
+  }
+}
