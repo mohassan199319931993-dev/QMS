@@ -164,50 +164,96 @@ function clearModelFields() {
 }
 
 // ========================
-// 📝 تعبئة حقول العيب تلقائياً بعد إدخال كود الموديل
 // ========================
-// ========================
-// 📝 تعبئة حقول العيب من Supabase
+// 📝 تعبئة حقول العيب من Supabase (نسخة محسّنة)
 // ========================
 async function loadDefectByCode(defectCode) {
     if (!defectCode) return;
 
     defectCode = defectCode.trim();
 
-    const { data, error } = await window.supabaseClient
-        .from("defects_master")
-        .select(`
-            defect_code,
-            department,
-            area,
-            process,
-            defect_part,
-            defect,
-            part_description
-        `)
-        .ilike("defect_code", defectCode)
-        .maybeSingle();
+    try {
+        // 🔹 البحث عن كود مطابق تماما أولاً
+        let { data, error } = await window.supabaseClient
+            .from("defects_master")
+            .select(`
+                defect_code,
+                department,
+                area,
+                process,
+                defect_part,
+                defect,
+                part_description
+            `)
+            .ilike("defect_code", defectCode)
+            .maybeSingle();
 
-    if (error) {
-        console.error(error);
-        alert("❌ خطأ في تحميل بيانات العيب");
+        if (error) {
+            console.error(error);
+            alert("❌ خطأ في تحميل بيانات العيب");
+            clearDefectFields();
+            return;
+        }
+
+        // 🔹 لو ما لقيش نتيجة، حاول تبحث عن أقرب كود (Partial Match)
+        if (!data) {
+            const { data: partialData, error: partialError } = await window.supabaseClient
+                .from("defects_master")
+                .select(`
+                    defect_code,
+                    department,
+                    area,
+                    process,
+                    defect_part,
+                    defect,
+                    part_description
+                `)
+                .ilike("defect_code", `%${defectCode}%`)
+                .limit(1)
+                .maybeSingle();
+
+            if (partialError) {
+                console.error(partialError);
+                clearDefectFields();
+                return;
+            }
+
+            data = partialData;
+        }
+
+        if (!data) {
+            alert("❌ كود العيب غير موجود");
+            clearDefectFields();
+            return;
+        }
+
+        // 🔥 تعبئة الحقول تلقائياً
+        document.getElementById("department").value = data.department ?? "";
+        document.getElementById("area").value = data.area ?? "";
+        document.getElementById("process").value = data.process ?? "";
+        document.getElementById("defect_part").value = data.defect_part ?? "";
+        document.getElementById("defect").value = data.defect ?? "";
+        document.getElementById("part_description").value = data.part_description ?? "";
+
+    } catch (err) {
+        console.error("🔥 Unexpected Error:", err);
         clearDefectFields();
-        return;
+        alert("❌ حصل خطأ أثناء البحث عن كود العيب");
     }
+}
 
-    if (!data) {
-        alert("❌ كود العيب غير موجود");
-        clearDefectFields();
-        return;
-    }
-
-    // 🔥 تعبئة الحقول تلقائياً
-    document.getElementById("department").value = data.department ?? "";
-    document.getElementById("area").value = data.area ?? "";
-    document.getElementById("process").value = data.process ?? "";
-    document.getElementById("defect_part").value = data.defect_part ?? "";
-    document.getElementById("defect").value = data.defect ?? "";
-    document.getElementById("part_description").value = data.part_description ?? "";
+function clearDefectFields() {
+    [
+        "department",
+        "area",
+        "process",
+        "defect_part",
+        "defect",
+        "part_description"
+    ].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = "";
+    });
 }
 
 
