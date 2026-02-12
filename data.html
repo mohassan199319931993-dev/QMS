@@ -279,47 +279,50 @@
 
 
 
-                        <!-- قسم بيانات العيب -->
+                     <!-- قسم معلومات العيب -->
 <div class="form-section">
-    <h4><i class="fas fa-exclamation-triangle"></i> بيانات العيب</h4>
-    
+    <h4><i class="fas fa-exclamation-triangle"></i> معلومات العيب</h4>
+
     <div class="form-row">
         <div class="form-group">
-            <label for="defect-code">كود العيب</label>
-            <input type="text" id="defect-code" name="defect-code" placeholder="سيتم توليده تلقائياً أو أدخله يدويًا">
+            <label for="defect_code">كود العيب <span class="required">*</span></label>
+            <input type="text" id="defect_code" name="defect_code" placeholder="أدخل كود العيب" required>
         </div>
+
+        <div class="form-group">
+            <label for="defect">اسم / نوع العيب</label>
+            <input type="text" id="defect" name="defect" readonly>
+        </div>
+    </div>
+
+    <div class="form-row">
         <div class="form-group">
             <label for="department">القسم</label>
             <input type="text" id="department" name="department" readonly>
         </div>
-    </div>
 
-    <div class="form-row">
         <div class="form-group">
             <label for="area">المنطقة</label>
             <input type="text" id="area" name="area" readonly>
         </div>
+    </div>
+
+    <div class="form-row">
         <div class="form-group">
             <label for="process">العملية</label>
             <input type="text" id="process" name="process" readonly>
         </div>
-    </div>
 
-    <div class="form-row">
         <div class="form-group">
-            <label for="defect-part">الجزء العيب</label>
-            <input type="text" id="defect-part" name="defect-part" placeholder="أدخل الجزء المتأثر">
-        </div>
-        <div class="form-group">
-            <label for="defect">اسم العيب</label>
-            <input type="text" id="defect" name="defect" placeholder="أدخل اسم العيب">
+            <label for="defect_part">الجزء المتأثر</label>
+            <input type="text" id="defect_part" name="defect_part" readonly>
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group">
-            <label for="part-description">وصف الجزء</label>
-            <textarea id="part-description" name="part-description" rows="2" placeholder="وصف تفصيلي للجزء"></textarea>
+            <label for="part_description">وصف الجزء</label>
+            <input type="text" id="part_description" name="part_description" readonly>
         </div>
     </div>
 </div>
