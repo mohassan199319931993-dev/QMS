@@ -131,6 +131,7 @@ async function loadModelByCode(modelCode) {
     document.getElementById("current_max").value = data.current_max ?? "";
 }
 
+fillDefectFieldsFromModel(data);
 
 
 function clearModelFields() {
@@ -154,8 +155,26 @@ function clearModelFields() {
 }
 
 // ========================
-// 📋 تحميل جدول الموديلات
+// 📝 تعبئة حقول العيب تلقائياً بعد إدخال كود الموديل
 // ========================
+function fillDefectFieldsFromModel(data) {
+    if (!data) {
+        clearDefectFields();
+        return;
+    }
+
+    document.getElementById("department").value = data.section ?? "";
+    document.getElementById("area").value = data.model ?? "";
+    document.getElementById("process").value = data.model_type ?? "";
+}
+
+function clearDefectFields() {
+    ["department", "area", "process", "defect-part", "defect", "part-description"]
+        .forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = "";
+        });
+}
 
 // ========================
 // 🎧 إعداد مستمعي الأحداث
