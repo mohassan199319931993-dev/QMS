@@ -16,6 +16,15 @@ document.addEventListener('DOMContentLoaded', function() {
             loadModelByCode(this.value.trim());
         });
     }
+
+    // 🔹 تحميل بيانات العيب من Supabase عند إدخال كود العيب
+const defectCodeInput = document.getElementById("defect_code");
+if (defectCodeInput) {
+    defectCodeInput.addEventListener("blur", function () {
+        loadDefectByCode(this.value.trim());
+    });
+}
+
 });
 
 // ========================
@@ -157,24 +166,50 @@ function clearModelFields() {
 // ========================
 // 📝 تعبئة حقول العيب تلقائياً بعد إدخال كود الموديل
 // ========================
-function fillDefectFieldsFromModel(data) {
-    if (!data) {
+// ========================
+// 📝 تعبئة حقول العيب من Supabase
+// ========================
+async function loadDefectByCode(defectCode) {
+    if (!defectCode) return;
+
+    defectCode = defectCode.trim();
+
+    const { data, error } = await window.supabaseClient
+        .from("defects_master")
+        .select(`
+            defect_code,
+            department,
+            area,
+            process,
+            defect_part,
+            defect,
+            part_description
+        `)
+        .ilike("defect_code", defectCode)
+        .maybeSingle();
+
+    if (error) {
+        console.error(error);
+        alert("❌ خطأ في تحميل بيانات العيب");
         clearDefectFields();
         return;
     }
 
-    document.getElementById("department").value = data.section ?? "";
-    document.getElementById("area").value = data.model ?? "";
-    document.getElementById("process").value = data.model_type ?? "";
+    if (!data) {
+        alert("❌ كود العيب غير موجود");
+        clearDefectFields();
+        return;
+    }
+
+    // 🔥 تعبئة الحقول تلقائياً
+    document.getElementById("department").value = data.department ?? "";
+    document.getElementById("area").value = data.area ?? "";
+    document.getElementById("process").value = data.process ?? "";
+    document.getElementById("defect_part").value = data.defect_part ?? "";
+    document.getElementById("defect").value = data.defect ?? "";
+    document.getElementById("part_description").value = data.part_description ?? "";
 }
 
-function clearDefectFields() {
-    ["department", "area", "process", "defect-part", "defect", "part-description"]
-        .forEach(id => {
-            const el = document.getElementById(id);
-            if (el) el.value = "";
-        });
-}
 
 // ========================
 // 🎧 إعداد مستمعي الأحداث
